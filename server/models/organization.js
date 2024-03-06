@@ -9,6 +9,8 @@ export default function (sequelize, DataTypes) {
      */
     static associate(models) {
       // define association here
+      Organization.hasMany(models.Post);
+      Organization.hasMany(models.Program);
     }
   }
   Organization.init(

@@ -9,12 +9,12 @@ export default function (sequelize, DataTypes) {
      */
     static associate(models) {
       // define association here
+      Bookmark.belongsTo(models.User);
+      Bookmark.belongsTo(models.Post);
     }
   }
   Bookmark.init(
     {
-      UserId: DataTypes.INTEGER,
-      PostId: DataTypes.INTEGER,
       type: DataTypes.STRING,
     },
     {

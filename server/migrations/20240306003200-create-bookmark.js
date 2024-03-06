@@ -10,6 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       UserId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: {
@@ -19,6 +20,7 @@ module.exports = {
         },
       },
       PostId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: {
@@ -40,6 +42,7 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
+    await queryInterface.addIndex('Bookmarks', ["UserId", "PostId"], {unique:true});
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Bookmarks');

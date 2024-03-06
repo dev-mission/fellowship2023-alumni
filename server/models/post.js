@@ -9,16 +9,20 @@ export default function (sequelize, DataTypes) {
      */
     static associate(models) {
       // define association here
+      Post.belongsTo(models.User);
+      Post.belongsTo(models.Organization);
+      Post.belongsTo(models.Program);
+      Post.hasMany(models.Bookmark);
+      Post.hasMany(models.PostTag);
+      Post.belongsToMany(models.Tag, { through: models.PostTag });
     }
   }
   Post.init(
     {
-      UserId: DataTypes.INTEGER,
       postedOn: DataTypes.DATE,
       expiresOn: DataTypes.DATE,
       title: DataTypes.STRING,
       description: DataTypes.TEXT,
-      OrganizationId: DataTypes.INTEGER,
       applicationUrl: DataTypes.STRING,
       isPaidOpportunity: DataTypes.BOOLEAN,
       entryCost: DataTypes.STRING,
@@ -26,7 +30,6 @@ export default function (sequelize, DataTypes) {
       isRecurring: DataTypes.BOOLEAN,
       isArchived: DataTypes.BOOLEAN,
       workLocation: DataTypes.STRING,
-      programId: DataTypes.INTEGER,
     },
     {
       sequelize,

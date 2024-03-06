@@ -9,12 +9,12 @@ export default function (sequelize, DataTypes) {
      */
     static associate(models) {
       // define association here
+      PostTag.belongsTo(models.Post);
+      PostTag.belongsTo(models.Tag);
     }
   }
   PostTag.init(
     {
-      PostId: DataTypes.INTEGER,
-      TagId: DataTypes.INTEGER,
     },
     {
       sequelize,

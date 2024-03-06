@@ -9,11 +9,12 @@ export default function (sequelize, DataTypes) {
      */
     static associate(models) {
       // define association here
+      Program.belongsTo(models.Organization);
+      Program.hasMany(models.Post);
     }
   }
   Program.init(
     {
-      OrganizationId: DataTypes.INTEGER,
       name: DataTypes.STRING,
       description: DataTypes.TEXT,
     },

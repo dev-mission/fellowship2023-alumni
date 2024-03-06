@@ -10,6 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       PostId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: {
@@ -19,6 +20,7 @@ module.exports = {
         },
       },
       TagId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
         references: {
           model: {
@@ -36,6 +38,7 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
+    await queryInterface.addIndex('PostTags', ["PostId", "TagId"], {unique:true});
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('PostTags');
