@@ -14,7 +14,7 @@ export default function (sequelize, DataTypes) {
   Bookmark.init(
     {
       UserId: DataTypes.INTEGER,
-      PostingId: DataTypes.INTEGER,
+      PostId: DataTypes.INTEGER,
       type: DataTypes.STRING,
     },
     {

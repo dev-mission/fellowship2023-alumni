@@ -11,6 +11,12 @@ module.exports = {
       },
       UserId: {
         type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: 'Users',
+          },
+          key: 'id',
+        },
       },
       postedOn: {
         type: Sequelize.DATE,
@@ -26,6 +32,12 @@ module.exports = {
       },
       OrganizationId: {
         type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: 'Organizations',
+          },
+          key: 'id',
+        },
       },
       applicationUrl: {
         type: Sequelize.STRING,
@@ -48,8 +60,14 @@ module.exports = {
       workLocation: {
         type: Sequelize.STRING,
       },
-      programId: {
+      ProgramId: {
         type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: 'Programs',
+          },
+          key: 'id',
+        },
       },
       createdAt: {
         allowNull: false,

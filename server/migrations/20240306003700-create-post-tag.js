@@ -2,21 +2,30 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Bookmarks', {
+    await queryInterface.createTable('PostTags', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      UserId: {
+      PostId: {
         type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: 'Posts',
+          },
+          key: 'id',
+        },
       },
-      PostingId: {
+      TagId: {
         type: Sequelize.INTEGER,
-      },
-      type: {
-        type: Sequelize.STRING,
+        references: {
+          model: {
+            tableName: 'Tags',
+          },
+          key: 'id',
+        },
       },
       createdAt: {
         allowNull: false,
@@ -29,6 +38,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Bookmarks');
+    await queryInterface.dropTable('PostTags');
   },
 };

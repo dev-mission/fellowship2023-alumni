@@ -2,21 +2,34 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Programs', {
+    await queryInterface.createTable('Bookmarks', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      OrganizationId: {
+      UserId: {
         type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: 'Users',
+          },
+          key: 'id',
+        },
       },
-      name: {
+      PostId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: 'Posts',
+          },
+          key: 'id',
+        },
+
+      },
+      type: {
         type: Sequelize.STRING,
-      },
-      description: {
-        type: Sequelize.TEXT,
       },
       createdAt: {
         allowNull: false,
@@ -29,6 +42,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Programs');
+    await queryInterface.dropTable('Bookmarks');
   },
 };
