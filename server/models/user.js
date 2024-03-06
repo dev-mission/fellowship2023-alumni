@@ -16,6 +16,7 @@ export default function (sequelize, DataTypes) {
       // define association here
       User.hasMany(models.Bookmark);
       User.hasMany(models.Post);
+      // User.belongsTo(models.Cohort);
     }
 
     static isValidPassword(password) {

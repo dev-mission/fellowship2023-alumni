@@ -1,4 +1,4 @@
-import { Model, Op } from 'sequelize';
+import { Model } from 'sequelize';
 
 export default function (sequelize, DataTypes) {
   class Cohort extends Model {
@@ -7,8 +7,10 @@ export default function (sequelize, DataTypes) {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
+    // eslint-disable-next-line no-unused-vars
     static associate(models) {
       // define association here
+      // Cohort.hasMany(models.User);
     }
   }
   Cohort.init(

@@ -38,7 +38,7 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
-    await queryInterface.addIndex('PostTags', ["PostId", "TagId"], {unique:true});
+    await queryInterface.addIndex('PostTags', ['PostId', 'TagId'], { unique: true });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('PostTags');

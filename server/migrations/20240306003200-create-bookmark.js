@@ -28,7 +28,6 @@ module.exports = {
           },
           key: 'id',
         },
-
       },
       type: {
         type: Sequelize.STRING,
@@ -42,7 +41,7 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
-    await queryInterface.addIndex('Bookmarks', ["UserId", "PostId"], {unique:true});
+    await queryInterface.addIndex('Bookmarks', ['UserId', 'PostId'], { unique: true });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Bookmarks');

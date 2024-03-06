@@ -1,6 +1,6 @@
-import { Model, Op } from 'sequelize';
+import { Model } from 'sequelize';
 
-export default function (sequelize, DataTypes) {
+export default function (sequelize) {
   class PostTag extends Model {
     /**
      * Helper method for defining associations.
@@ -14,8 +14,7 @@ export default function (sequelize, DataTypes) {
     }
   }
   PostTag.init(
-    {
-    },
+    {},
     {
       sequelize,
       modelName: 'PostTag',
