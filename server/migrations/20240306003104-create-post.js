@@ -7,61 +7,61 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       UserId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       postedOn: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       expiresOn: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       title: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       description: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
       },
       OrganizationId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       applicationUrl: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       isPaidOpportunity: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
       },
       entryCost: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       referredBy: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       isRecurring: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
       },
       isArchived: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
       },
       workLocation: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       programId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Posts');
-  }
+  },
 };

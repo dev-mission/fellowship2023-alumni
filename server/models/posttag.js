@@ -1,8 +1,6 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+import { Model, Op } from 'sequelize';
+
+export default function (sequelize, DataTypes) {
   class PostTag extends Model {
     /**
      * Helper method for defining associations.
@@ -13,12 +11,15 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  PostTag.init({
-    PostId: DataTypes.INTEGER,
-    TagId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'PostTag',
-  });
+  PostTag.init(
+    {
+      PostId: DataTypes.INTEGER,
+      TagId: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: 'PostTag',
+    },
+  );
   return PostTag;
-};
+}

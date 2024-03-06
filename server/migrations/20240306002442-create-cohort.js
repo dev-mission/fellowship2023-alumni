@@ -7,34 +7,34 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       cohortNumber: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       graduatedOn: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       year: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       term: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       affiliation: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Cohorts');
-  }
+  },
 };

@@ -1,8 +1,6 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+import { Model, Op } from 'sequelize';
+
+export default function (sequelize, DataTypes) {
   class Cohort extends Model {
     /**
      * Helper method for defining associations.
@@ -13,15 +11,18 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Cohort.init({
-    cohortNumber: DataTypes.INTEGER,
-    graduatedOn: DataTypes.DATE,
-    year: DataTypes.STRING,
-    term: DataTypes.STRING,
-    affiliation: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'Cohort',
-  });
+  Cohort.init(
+    {
+      cohortNumber: DataTypes.INTEGER,
+      graduatedOn: DataTypes.DATE,
+      year: DataTypes.STRING,
+      term: DataTypes.STRING,
+      affiliation: DataTypes.STRING,
+    },
+    {
+      sequelize,
+      modelName: 'Cohort',
+    },
+  );
   return Cohort;
-};
+}

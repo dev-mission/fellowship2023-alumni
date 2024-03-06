@@ -1,8 +1,6 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+import { Model, Op } from 'sequelize';
+
+export default function (sequelize, DataTypes) {
   class Post extends Model {
     /**
      * Helper method for defining associations.
@@ -13,24 +11,27 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Post.init({
-    UserId: DataTypes.INTEGER,
-    postedOn: DataTypes.DATE,
-    expiresOn: DataTypes.DATE,
-    title: DataTypes.STRING,
-    description: DataTypes.TEXT,
-    OrganizationId: DataTypes.INTEGER,
-    applicationUrl: DataTypes.STRING,
-    isPaidOpportunity: DataTypes.BOOLEAN,
-    entryCost: DataTypes.STRING,
-    referredBy: DataTypes.STRING,
-    isRecurring: DataTypes.BOOLEAN,
-    isArchived: DataTypes.BOOLEAN,
-    workLocation: DataTypes.STRING,
-    programId: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'Post',
-  });
+  Post.init(
+    {
+      UserId: DataTypes.INTEGER,
+      postedOn: DataTypes.DATE,
+      expiresOn: DataTypes.DATE,
+      title: DataTypes.STRING,
+      description: DataTypes.TEXT,
+      OrganizationId: DataTypes.INTEGER,
+      applicationUrl: DataTypes.STRING,
+      isPaidOpportunity: DataTypes.BOOLEAN,
+      entryCost: DataTypes.STRING,
+      referredBy: DataTypes.STRING,
+      isRecurring: DataTypes.BOOLEAN,
+      isArchived: DataTypes.BOOLEAN,
+      workLocation: DataTypes.STRING,
+      programId: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: 'Post',
+    },
+  );
   return Post;
-};
+}
