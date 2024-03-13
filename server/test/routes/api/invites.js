@@ -113,6 +113,15 @@ describe('/api/invites', () => {
         isAdmin: false,
         picture: null,
         pictureUrl: null,
+
+        // updated User model
+
+        roles: null,
+        bio: null,
+        userName: null,
+        CohortId: null,
+        linkedin: null,
+        currentPosition: null,
       });
 
       const invite = await models.Invite.findByPk('14a500b7-f14c-48cd-b815-3685a8b54370');
