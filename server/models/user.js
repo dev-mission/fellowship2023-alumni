@@ -14,6 +14,9 @@ export default function (sequelize, DataTypes) {
     // eslint-disable-next-line no-unused-vars
     static associate(models) {
       // define association here
+      User.hasMany(models.Bookmark);
+      User.hasMany(models.Post);
+      User.belongsTo(models.Cohort);
     }
 
     static isValidPassword(password) {
@@ -25,7 +28,25 @@ export default function (sequelize, DataTypes) {
     }
 
     toJSON() {
-      return _.pick(this.get(), ['id', 'firstName', 'lastName', 'email', 'picture', 'pictureUrl', 'isAdmin']);
+      // before updating User model
+      // return _.pick(this.get(), ['id', 'firstName', 'lastName', 'email', 'picture', 'pictureUrl', 'isAdmin']);
+
+      // after new User model
+      return _.pick(this.get(), [
+        'id',
+        'firstName',
+        'lastName',
+        'email',
+        'picture',
+        'pictureUrl',
+        'isAdmin',
+        'roles',
+        'bio',
+        'userName',
+        'CohortId',
+        'linkedin',
+        'currentPosition',
+      ]);
     }
 
     hashPassword(password, options) {
@@ -158,6 +179,26 @@ export default function (sequelize, DataTypes) {
       },
       passwordResetTokenExpiresAt: {
         type: DataTypes.DATE,
+      },
+
+      // updated columns below
+      roles: {
+        type: DataTypes.JSONB,
+      },
+      bio: {
+        type: DataTypes.STRING,
+      },
+      userName: {
+        type: DataTypes.STRING,
+      },
+      // CohortId: {
+      //   type: DataTypes.INTEGER,
+      // },
+      linkedin: {
+        type: DataTypes.STRING,
+      },
+      currentPosition: {
+        type: DataTypes.STRING,
       },
     },
     {
