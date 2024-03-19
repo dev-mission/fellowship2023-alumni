@@ -1,0 +1,22 @@
+[
+    {
+        "model": "Cohort",
+        "data": {
+            "id": 10000,
+            "cohortNumber": 1,
+            "year": "2021",
+            "term": "Winter",
+            "affiliation": "Dev/Mission"
+        }
+    },
+    {
+        "model": "Cohort",
+        "data": {
+            "id": 10001,
+            "cohortNumber": 2,
+            "year": "2022",
+            "term": "Spring",
+            "affiliation": "Goodwill"
+        }
+    }
+]
