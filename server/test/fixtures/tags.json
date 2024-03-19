@@ -1,0 +1,16 @@
+[
+  {
+    "model": "Tag",
+    "data": {
+      "id": 10000,
+      "name": "Tag 1"
+    }
+  },
+  {
+    "model": "Tag",
+    "data": {
+      "id": 10001,
+      "name": "Tag 2"
+    }
+  }
+]
