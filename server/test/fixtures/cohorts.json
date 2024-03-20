@@ -1,22 +1,24 @@
 [
-  {
-    "model": "Cohort",
-    "data": {
-      "id": 10000,
-      "cohortNumber": 1,
-      "year": "2021",
-      "term": "Winter",
-      "affiliation": "Dev/Mission"
+    {
+        "model": "Cohort",
+        "data": {
+            "id": 10000,
+            "cohortNumber": 1,
+            "graduatedOn": "2021-01-01T00:00:00.000Z",
+            "year": "2021",
+            "term": "Winter",
+            "affiliation": "Dev/Mission"
+        }
+    },
+    {
+        "model": "Cohort",
+        "data": {
+            "id": 10001,
+            "cohortNumber": 2,
+            "graduatedOn": "2022-02-02T00:00:00.000Z",
+            "year": "2022",
+            "term": "Spring",
+            "affiliation": "Goodwill"
+        }
     }
-  },
-  {
-    "model": "Cohort",
-    "data": {
-      "id": 10001,
-      "cohortNumber": 2,
-      "year": "2022",
-      "term": "Spring",
-      "affiliation": "Goodwill"
-    }
-  }
 ]

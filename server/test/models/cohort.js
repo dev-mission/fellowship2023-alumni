@@ -13,7 +13,7 @@ describe('models.Cohort', () => {
 
     const record = await models.Cohort.create({
       cohortNumber: 3,
-      // graduatedOn: '2023-03-03T00:00:00.000Z',
+      graduatedOn: '2023-03-03T00:00:00.000Z',
       year: '2023',
       term: 'Summer',
       affiliation: 'Dev/Mission',
@@ -22,7 +22,7 @@ describe('models.Cohort', () => {
     assert.deepStrictEqual(await models.Cohort.count(), 3);
     assert.notDeepStrictEqual(record.id, null);
     assert.deepStrictEqual(record.cohortNumber, 3);
-    // assert.deepStrictEqual(record.graduatedOn, '2023-03-03T00:00:00.000Z');
+    assert.deepStrictEqual(record.graduatedOn, new Date('2023-03-03T00:00:00.000Z'));
     assert.deepStrictEqual(record.year, '2023');
     assert.deepStrictEqual(record.term, 'Summer');
     assert.deepStrictEqual(record.affiliation, 'Dev/Mission');

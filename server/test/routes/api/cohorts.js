@@ -19,7 +19,7 @@ describe('/api/cohorts', () => {
       .post('/api/cohorts')
       .send({
         cohortNumber: 3,
-        // graduatedOn: '2023-03-03T00:00:00.000Z',
+        graduatedOn: '2023-03-03T00:00:00.000Z',
         year: '2023',
         term: 'Summer',
         affiliation: 'Dev/Mission',
@@ -28,7 +28,7 @@ describe('/api/cohorts', () => {
 
     const record = await models.Cohort.findByPk(response.body.id);
     assert.deepStrictEqual(record.cohortNumber, 3);
-    // assert.deepStrictEqual(record.graduatedOn, '2023-03-03T00:00:00.000Z');
+    assert.deepStrictEqual(record.graduatedOn, new Date('2023-03-03T00:00:00.000Z'));
     assert.deepStrictEqual(record.year, '2023');
     assert.deepStrictEqual(record.term, 'Summer');
     assert.deepStrictEqual(record.affiliation, 'Dev/Mission');
@@ -39,7 +39,7 @@ describe('/api/cohorts', () => {
       .patch('/api/cohorts/10001')
       .send({
         cohortNumber: 4,
-        // graduatedOn: '2024-04-04T00:00:00.000Z',
+        graduatedOn: '2024-04-04T00:00:00.000Z',
         year: '2024',
         term: 'Fall',
         affiliation: 'Goodwill',
@@ -47,7 +47,7 @@ describe('/api/cohorts', () => {
       .expect(StatusCodes.OK);
     const record = await models.Cohort.findByPk(10001);
     assert.deepStrictEqual(record.cohortNumber, 4);
-    // assert.deepStrictEqual(record.graduatedOn, '2024-04-04T00:00:00.000Z');
+    assert.deepStrictEqual(record.graduatedOn, new Date('2024-04-04T00:00:00.000Z'));
     assert.deepStrictEqual(record.year, '2024');
     assert.deepStrictEqual(record.term, 'Fall');
     assert.deepStrictEqual(record.affiliation, 'Goodwill');
