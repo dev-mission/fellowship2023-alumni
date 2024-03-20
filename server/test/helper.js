@@ -56,6 +56,7 @@ async function resetDatabase() {
     DELETE FROM "Users";
     DELETE FROM "Cohorts";
     DELETE FROM "Tags";
+    DELETE FROM "Organizations";
   `);
 }
 

@@ -7,6 +7,7 @@ import usersRoutes from './users.js';
 
 import cohortsRoutes from './cohorts.js';
 import tagsRoutes from './tags.js';
+import organizationsRoutes from './organizations.js';
 
 const router = express.Router();
 
@@ -18,5 +19,6 @@ router.use('/users', usersRoutes);
 
 router.use('/cohorts', cohortsRoutes);
 router.use('/tags', tagsRoutes);
+router.use('/organizations', organizationsRoutes);
 
 export default router;
