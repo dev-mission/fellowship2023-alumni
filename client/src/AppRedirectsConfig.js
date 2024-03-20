@@ -1,7 +1,7 @@
 import { matchPath } from 'react-router-dom';
 
 export const ADMIN_AUTH_PROTECTED_PATHS = ['/admin/*'];
-export const AUTH_PROTECTED_PATHS = ['/account/*'];
+export const AUTH_PROTECTED_PATHS = ['/account/*', '/opportunities/*'];
 export const REDIRECTS = [
   ['/admin', '/admin/users'],
   ['/passwords', '/passwords/forgot'],
