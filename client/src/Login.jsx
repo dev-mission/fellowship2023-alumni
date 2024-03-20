@@ -45,26 +45,27 @@ function Login() {
   return (
     <>
       <Helmet>
-        <title>Log in - {staticContext?.env?.VITE_SITE_TITLE ?? ''}</title>
+        <title>Login - {staticContext?.env?.VITE_SITE_TITLE ?? ''}</title>
       </Helmet>
       <main className="container">
         <div className="row justify-content-center">
           <div className="col col-sm-10 col-md-8 col-lg-6 col-xl-4">
             <div className="card">
               <div className="card-body">
-                <h2 className="card-title">Log in</h2>
+                <h2 className="card-title">Login to Alumni Portal</h2>
                 {location.state?.flash && <div className="alert alert-success">{location.state?.flash}</div>}
                 {showInvalidError && <div className="alert alert-danger">Invalid email and/or password.</div>}
                 <form onSubmit={onSubmit}>
                   <div className="mb-3">
                     <label className="form-label" htmlFor="email">
-                      Email
+                      Username
                     </label>
                     <input
                       type="text"
                       className="form-control"
                       id="email"
                       name="email"
+                      placeholder="Enter your username or email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                     />
@@ -78,13 +79,14 @@ function Login() {
                       className="form-control"
                       id="password"
                       name="password"
+                      placeholder="Enter your password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                     />
                   </div>
                   <div className="mb-3 d-grid">
                     <button className="btn btn-primary" type="submit">
-                      Submit
+                      Login
                     </button>
                   </div>
                   <div className="mb-3 text-center">
