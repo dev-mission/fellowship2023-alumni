@@ -6,6 +6,7 @@ import passwordsRoutes from './passwords.js';
 import usersRoutes from './users.js';
 
 import cohortsRoutes from './cohorts.js';
+import tagsRoutes from './tags.js';
 
 const router = express.Router();
 
@@ -16,5 +17,6 @@ router.use('/passwords', passwordsRoutes);
 router.use('/users', usersRoutes);
 
 router.use('/cohorts', cohortsRoutes);
+router.use('/tags', tagsRoutes);
 
 export default router;
