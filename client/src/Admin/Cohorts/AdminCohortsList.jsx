@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { DateTime } from 'luxon';
 
@@ -7,6 +7,7 @@ import Api from '../../Api';
 import { useStaticContext } from '../../StaticContext';
 
 function AdminCohortsList() {
+  const location = useLocation();
   const navigate = useNavigate();
   const staticContext = useStaticContext();
   const [cohorts, setCohorts] = useState([]);
@@ -22,6 +23,7 @@ function AdminCohortsList() {
       </Helmet>
       <main className="users container">
         <h1>Manage Cohorts</h1>
+        {location.state?.flash && <div className="alert alert-success mb-3">{location.state?.flash}</div>}
         <div className="mb-3">
           <Link className="btn btn-outline-primary" to="new">
             New Cohort

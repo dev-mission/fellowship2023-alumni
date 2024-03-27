@@ -65,6 +65,9 @@ const Api = {
     update(id, data) {
       return instance.patch(`/api/cohorts/${id}`, data);
     },
+    delete(id) {
+      return instance.delete(`/api/cohorts/${id}`);
+    },
   },
   invites: {
     index() {

@@ -35,7 +35,9 @@ router.delete('/:id', async (req, res) => {
 });
 
 router.get('/', async (req, res) => {
-  const records = await models.Cohort.findAll();
+  const records = await models.Cohort.findAll({
+    order: [['cohortNumber', 'DESC']],
+  });
   res.json(records.map((r) => r.toJSON()));
 });
 
