@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { DateTime } from 'luxon';
 
 import Api from '../../Api';
 import { useStaticContext } from '../../StaticContext';
 
 function AdminCohortsList() {
+  const navigate = useNavigate();
   const staticContext = useStaticContext();
   const [cohorts, setCohorts] = useState([]);
 
@@ -38,12 +40,12 @@ function AdminCohortsList() {
             </thead>
             <tbody>
               {cohorts.map((cohort) => (
-                <tr key={cohort.id}>
+                <tr key={cohort.id} onClick={() => navigate(`${cohort.id}`)}>
                   <td>{cohort.cohortNumber}</td>
                   <td>{cohort.affiliation}</td>
                   <td>{cohort.year}</td>
                   <td>{cohort.term}</td>
-                  <td>{cohort.graduated}</td>
+                  <td>{DateTime.fromISO(cohort.graduatedOn).toLocaleString(DateTime.DATETIME_MED)}</td>
                 </tr>
               ))}
             </tbody>

@@ -12,7 +12,14 @@ router.post('/', async (req, res) => {
     res.status(StatusCodes.CREATED).json(record.toJSON());
   } catch (error) {
     console.log(error);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+    if (error.name === 'SequelizeValidationError') {
+      res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
+        status: StatusCodes.UNPROCESSABLE_ENTITY,
+        errors: error.errors,
+      });
+    } else {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+    }
   }
 });
 
@@ -39,7 +46,14 @@ router.patch('/:id', async (req, res) => {
     res.json(record.toJSON());
   } catch (error) {
     console.log(error);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+    if (error.name === 'SequelizeValidationError') {
+      res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
+        status: StatusCodes.UNPROCESSABLE_ENTITY,
+        errors: error.errors,
+      });
+    } else {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+    }
   }
 });
 

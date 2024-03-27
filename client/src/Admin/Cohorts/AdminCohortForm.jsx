@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { useNavigate, useParams } from 'react-router-dom';
 import classNames from 'classnames';
 import { StatusCodes } from 'http-status-codes';
+import { DateTime } from 'luxon';
 
 import Api from '../../Api';
 import { useStaticContext } from '../../StaticContext';
@@ -27,7 +28,12 @@ function AdminCohortForm() {
 
   useEffect(() => {
     if (cohortId) {
-      Api.cohorts.get(cohortId).then((response) => setCohort(response.data));
+      Api.cohorts.get(cohortId).then((response) => {
+        // convert graduatedOn from UTC to local time
+        let { graduatedOn } = response.data;
+        response.data.graduatedOn = DateTime.fromISO(graduatedOn).toISO({ suppressMilliseconds: true, includeOffset: false });
+        setCohort(response.data);
+      });
     }
   }, [cohortId]);
 
@@ -41,13 +47,14 @@ function AdminCohortForm() {
     event.preventDefault();
     setError(null);
     try {
+      // set local time zone on graduatedOn timestamp
+      cohort.graduatedOn = DateTime.fromISO(cohort.graduatedOn, { zone: 'local' }).toISO();
       if (cohortId) {
         await Api.cohorts.update(cohortId, cohort);
         navigate(`/admin/cohorts/${cohortId}`);
       } else {
         const response = await Api.cohorts.create(cohort);
-        const json = await response.json();
-        const { id } = json;
+        const { id } = response.data;
         navigate(`/admin/cohorts/${id}`);
       }
     } catch (error) {
