@@ -46,6 +46,9 @@ const Api = {
     get(id) {
       return instance.get(`/api/cohorts/${id}`);
     },
+    update(id, data) {
+      return instance.patch(`/api/cohorts/${id}`, data);
+    },
   },
   invites: {
     index() {

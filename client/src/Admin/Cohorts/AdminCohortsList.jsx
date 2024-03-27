@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
 import Api from '../../Api';
@@ -19,6 +20,11 @@ function AdminCohortsList() {
       </Helmet>
       <main className="users container">
         <h1>Manage Cohorts</h1>
+        <div className="mb-3">
+          <Link className="btn btn-outline-primary" to="new">
+            New Cohort
+          </Link>
+        </div>
         <div className="table-responsive">
           <table className="table table-hover">
             <thead>
