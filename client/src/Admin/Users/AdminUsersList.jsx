@@ -120,8 +120,8 @@ function AdminUsersList() {
                 <th className="w-20">First name</th>
                 <th className="w-20">Last name</th>
                 <th className="w-20">Email</th>
-                <th className="w-5">Admin?</th>
-                <th className="w-15">Actions</th>
+                <th className="w-20">Admin?</th>
+                <th className="w-20">Actions</th>
               </tr>
             </thead>
             <tbody>

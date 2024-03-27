@@ -41,7 +41,7 @@ describe('/api/cohorts', () => {
         cohortNumber: 4,
         graduatedOn: '2024-04-04T00:00:00.000Z',
         year: '2024',
-        term: 'Fall',
+        term: 'Winter',
         affiliation: 'Goodwill',
       })
       .expect(StatusCodes.OK);
@@ -49,7 +49,7 @@ describe('/api/cohorts', () => {
     assert.deepStrictEqual(record.cohortNumber, 4);
     assert.deepStrictEqual(record.graduatedOn, new Date('2024-04-04T00:00:00.000Z'));
     assert.deepStrictEqual(record.year, '2024');
-    assert.deepStrictEqual(record.term, 'Fall');
+    assert.deepStrictEqual(record.term, 'Winter');
     assert.deepStrictEqual(record.affiliation, 'Goodwill');
   });
 
