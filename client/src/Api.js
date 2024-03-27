@@ -36,6 +36,17 @@ const Api = {
       return instance.post('/api/auth/register', data);
     },
   },
+  cohorts: {
+    index() {
+      return instance.get(`/api/cohorts`);
+    },
+    create(data) {
+      return instance.post('/api/cohorts', data);
+    },
+    get(id) {
+      return instance.get(`/api/cohorts/${id}`);
+    },
+  },
   invites: {
     index() {
       return instance.get(`/api/invites`);
