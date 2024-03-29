@@ -12,7 +12,14 @@ router.post('/', async (req, res) => {
     res.status(StatusCodes.CREATED).json(record.toJSON());
   } catch (error) {
     console.log(error);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+    if (error.name === 'SequelizeValidationError') {
+      res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
+        status: StatusCodes.UNPROCESSABLE_ENTITY,
+        errors: error.errors,
+      });
+    } else {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+    }
   }
 });
 
@@ -28,7 +35,9 @@ router.delete('/:id', async (req, res) => {
 });
 
 router.get('/', async (req, res) => {
-  const records = await models.Cohort.findAll();
+  const records = await models.Cohort.findAll({
+    order: [['cohortNumber', 'DESC']],
+  });
   res.json(records.map((r) => r.toJSON()));
 });
 
@@ -39,7 +48,14 @@ router.patch('/:id', async (req, res) => {
     res.json(record.toJSON());
   } catch (error) {
     console.log(error);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+    if (error.name === 'SequelizeValidationError') {
+      res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
+        status: StatusCodes.UNPROCESSABLE_ENTITY,
+        errors: error.errors,
+      });
+    } else {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+    }
   }
 });
 
