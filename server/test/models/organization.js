@@ -9,7 +9,7 @@ describe('models.Organization', () => {
   });
 
   it('creates a new Organization record', async () => {
-    assert.deepStrictEqual(await models.Organization.count(), 2);
+    assert.deepStrictEqual(await models.Organization.count(), 3);
 
     const record = await models.Organization.create({
       name: 'Verizon',
@@ -18,7 +18,7 @@ describe('models.Organization', () => {
       url: 'https://www.verizon.com/',
     });
 
-    assert.deepStrictEqual(await models.Organization.count(), 3);
+    assert.deepStrictEqual(await models.Organization.count(), 4);
     assert.notDeepStrictEqual(record.id, null);
     assert.deepStrictEqual(record.name, 'Verizon');
     assert.deepStrictEqual(record.location, 'San Francisco, CA');
@@ -36,14 +36,14 @@ describe('models.Organization', () => {
     const records = await models.Organization.findAll({
       order: [['name', 'ASC']],
     });
-    assert.deepStrictEqual(records.length, 2);
-    assert.deepStrictEqual(records[0].name, 'GoodWill');
+    assert.deepStrictEqual(records.length, 3);
+    assert.deepStrictEqual(records[0].name, 'Dev/Mission');
   });
 
   it('deletes an Organization record', async () => {
-    assert.deepStrictEqual(await models.Organization.count(), 2);
+    assert.deepStrictEqual(await models.Organization.count(), 3);
     const record = await models.Organization.findByPk(10000);
     await record.destroy();
-    assert.deepStrictEqual(await models.Organization.count(), 1);
+    assert.deepStrictEqual(await models.Organization.count(), 2);
   });
 });

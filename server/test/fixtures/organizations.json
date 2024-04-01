@@ -18,5 +18,15 @@
       "description": "This is Uber.",
       "url": "https://www.uber.com/"
     }
+  },
+  {
+    "model": "Organization",
+    "data": {
+      "id": 10002,
+      "name": "Dev/Mission",
+      "location": "San Francisco, CA",
+      "description": "This is Dev/Mission.",
+      "url": "https://www.devmission.org/"
+    }
   }
 ]
