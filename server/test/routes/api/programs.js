@@ -21,7 +21,7 @@ describe('/api/programs', () => {
       .send({
         name: 'Dev/Mission CTA Internship',
         description: 'Description for CTA Internship',
-        OrganizationId: 10002
+        OrganizationId: 10002,
       })
       .expect(StatusCodes.CREATED);
 
@@ -39,7 +39,7 @@ describe('/api/programs', () => {
       .send({
         name: 'Dev/Mission & GoodWill Pre-Apprenticeship',
         description: 'Description for Goodwill Pre-Apprenticeship',
-        OrganizationId: 10000
+        OrganizationId: 10000,
       })
       .expect(StatusCodes.OK);
     const record = await models.Program.findByPk(1000);

@@ -15,7 +15,7 @@ describe('models.Program', () => {
     const record = await models.Program.create({
       name: 'Dev/Mission CTA Internship',
       description: 'Description for CTA Internship',
-      OrganizationId: 10002
+      OrganizationId: 10002,
     });
 
     assert.deepStrictEqual(await models.Program.count(), 3);
