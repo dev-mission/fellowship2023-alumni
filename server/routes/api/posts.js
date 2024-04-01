@@ -8,11 +8,35 @@ const router = express.Router();
 
 router.post('/', async (req, res) => {
   try {
-    const record = await models.Post.create(_.pick(req.body, ['postedOn', 'expiresOn', 'title', 'description', 'applicationUrl', 'isPaidOpportunity', 'entryCost', 'referredBy', 'isRecurring', 'isArchived', 'workLocation', 'UserId', 'OrganizationId', 'ProgramId']));
+    const record = await models.Post.create(
+      _.pick(req.body, [
+        'postedOn',
+        'expiresOn',
+        'title',
+        'description',
+        'applicationUrl',
+        'isPaidOpportunity',
+        'entryCost',
+        'referredBy',
+        'isRecurring',
+        'isArchived',
+        'workLocation',
+        'UserId',
+        'OrganizationId',
+        'ProgramId',
+      ]),
+    );
     res.status(StatusCodes.CREATED).json(record.toJSON());
   } catch (error) {
     console.log(error);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+    if (error.name === 'SequelizeValidationError') {
+      res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
+        status: StatusCodes.UNPROCESSABLE_ENTITY,
+        errors: error.errors,
+      });
+    } else {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+    }
   }
 });
 
@@ -35,11 +59,35 @@ router.get('/', async (req, res) => {
 router.patch('/:id', async (req, res) => {
   try {
     const record = await models.Post.findByPk(req.params.id);
-    await record.update(_.pick(req.body, ['postedOn', 'expiresOn', 'title', 'description', 'applicationUrl', 'isPaidOpportunity', 'entryCost', 'referredBy', 'isRecurring', 'isArchived', 'workLocation', 'UserId', 'OrganizationId', 'ProgramId']));
+    await record.update(
+      _.pick(req.body, [
+        'postedOn',
+        'expiresOn',
+        'title',
+        'description',
+        'applicationUrl',
+        'isPaidOpportunity',
+        'entryCost',
+        'referredBy',
+        'isRecurring',
+        'isArchived',
+        'workLocation',
+        'UserId',
+        'OrganizationId',
+        'ProgramId',
+      ]),
+    );
     res.json(record.toJSON());
   } catch (error) {
     console.log(error);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+    if (error.name === 'SequelizeValidationError') {
+      res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
+        status: StatusCodes.UNPROCESSABLE_ENTITY,
+        errors: error.errors,
+      });
+    } else {
+      res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+    }
   }
 });
 
