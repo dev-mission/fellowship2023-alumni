@@ -20,5 +20,6 @@ router.use('/users', usersRoutes);
 router.use('/cohorts', cohortsRoutes);
 router.use('/tags', tagsRoutes);
 router.use('/organizations', organizationsRoutes);
+router.use('/posts', postsRoutes);
 
 export default router;
