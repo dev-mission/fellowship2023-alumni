@@ -59,7 +59,7 @@ describe('/api/organizations', () => {
   it('fetch all cohorts from the Organizations table', async () => {
     const response = await testSession.get('/api/organizations').expect(StatusCodes.OK);
     assert.deepStrictEqual(response.status, StatusCodes.OK);
-    assert.deepStrictEqual(response.body?.length, 2);
+    assert.deepStrictEqual(response.body?.length, 3);
     // console.log(response.body);
   });
 
