@@ -1,0 +1,42 @@
+[
+  {
+    "model": "Post",
+    "data": {
+      "id": 100,
+      "postedOn": "2021-01-01T00:00:00.000Z",
+      "expiresOn": "2031-01-01T00:00:00.000Z",
+      "title": "First Title",
+      "description": "This is the first post.",
+      "applicationUrl": "https://firstpost.com/",
+      "isPaidOpportunity": true,
+      "entryCost": "Free",
+      "referredBy": "Leo Sosa",
+      "isRecurring": true,
+      "isArchived": true,
+      "workLocation": "San Francisco, CA",
+      "UserId": 1,
+      "OrganizationId": 10000,
+      "ProgramId": 1000
+    }
+  },
+  {
+    "model": "Post",
+    "data": {
+      "id": 101,
+      "postedOn": "2022-02-02T00:00:00.000Z",
+      "expiresOn": "2032-02-02T00:00:00.000Z",
+      "title": "Second Title",
+      "description": "This is the second post.",
+      "applicationUrl": "https://secondpost.com/",
+      "isPaidOpportunity": false,
+      "entryCost": "$5.00",
+      "referredBy": "Leo Sosa",
+      "isRecurring": false,
+      "isArchived": false,
+      "workLocation": "San Francisco, CA",
+      "UserId": 2,
+      "OrganizationId": 10001,
+      "ProgramId": 1001
+    }
+  }
+]
