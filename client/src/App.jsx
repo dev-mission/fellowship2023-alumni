@@ -14,6 +14,7 @@ import PasswordsRoutes from './Passwords/PasswordsRoutes';
 import Register from './Register';
 import UsersRoutes from './Users/UsersRoutes';
 import OpportunitiesRoutes from './Opportunities/OpportunitiesRoutes';
+import HelpSurveyRoutes from './HelpSurvey/HelpSurveyRoutes';
 
 function App() {
   const staticContext = useStaticContext();
@@ -35,6 +36,7 @@ function App() {
                 <Route path="/account/*" element={<UsersRoutes />} />
                 <Route path="/admin/*" element={<AdminRoutes />} />
                 <Route path="/opportunities/*" element={<OpportunitiesRoutes />} />
+                <Route path="/helpsurvey/*" element={<HelpSurveyRoutes />} />
               </Routes>
             </AppRedirects>
           }
