@@ -1,31 +1,32 @@
 import express from 'express';
 import { StatusCodes } from 'http-status-codes';
 import _ from 'lodash';
+import interceptors from '../interceptors.js';
 
 import models from '../../models/index.js';
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.post('/', interceptors.requireAdmin, async (req, res) => {
   try {
-    const record = await models.Post.create(
-      _.pick(req.body, [
-        'postedOn',
-        'expiresOn',
-        'title',
-        'description',
-        'applicationUrl',
-        'isPaidOpportunity',
-        'entryCost',
-        'referredBy',
-        'isRecurring',
-        'isArchived',
-        'workLocation',
-        'UserId',
-        'OrganizationId',
-        'ProgramId',
-      ]),
-    );
+    const data = _.pick(req.body, [
+      'postedOn',
+      'expiresOn',
+      'title',
+      'description',
+      'applicationUrl',
+      'isPaidOpportunity',
+      'entryCost',
+      'referredBy',
+      'isRecurring',
+      'isArchived',
+      'workLocation',
+      'OrganizationId',
+      'ProgramId',
+    ]);
+    data.UserId = req.user.id;
+    const record = await models.Post.create(data);
+    
     res.status(StatusCodes.CREATED).json(record.toJSON());
   } catch (error) {
     console.log(error);
