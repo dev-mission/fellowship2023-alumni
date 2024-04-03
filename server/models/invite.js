@@ -51,21 +51,8 @@ export default function (sequelize, DataTypes) {
 
   Invite.init(
     {
-      firstName: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'First name cannot be blank',
-          },
-          notEmpty: {
-            msg: 'First name cannot be blank',
-          },
-        },
-      },
-      lastName: {
-        type: DataTypes.STRING,
-      },
+      firstName: DataTypes.STRING,
+      lastName: DataTypes.STRING,
       email: {
         type: DataTypes.CITEXT,
         allowNull: false,
@@ -81,13 +68,17 @@ export default function (sequelize, DataTypes) {
       fullName: {
         type: DataTypes.VIRTUAL,
         get() {
-          return `${this.firstName} ${this.lastName}`.trim();
+          return `${this.firstName ?? ''} ${this.lastName ?? ''}`.trim();
         },
       },
       fullNameAndEmail: {
         type: DataTypes.VIRTUAL,
         get() {
-          return `${this.fullName} <${this.email}>`;
+          const { fullName } = this;
+          if (fullName) {
+            return `"${this.fullName}" <${this.email}>`.trim();
+          }
+          return this.email;
         },
       },
       message: DataTypes.TEXT,

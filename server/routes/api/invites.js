@@ -41,6 +41,38 @@ router.post('/', interceptors.requireAdmin, async (req, res) => {
   }
 });
 
+router.post('/bulk', interceptors.requireAdmin, async (req, res) => {
+  try {
+    const { recipients, message } = req.body;
+    const payload = await Promise.all(
+      [...recipients.matchAll(/(?:"?([^"<@\n]+)"? ?<)?([^@< ,\n]+@[^ ,>\n]+)>?/g)].map(async (match) => {
+        const [, fullName, email] = match;
+        const data = {
+          email,
+          message,
+          CreatedByUserId: req.user.id,
+        };
+        if (fullName) {
+          const names = fullName.trim().split(' ');
+          if (names.length > 0) {
+            data.firstName = names[0];
+          }
+          if (names.length > 1) {
+            data.lastName = names.slice(1).join(' ');
+          }
+        }
+        const invite = await models.Invite.create(data);
+        await invite.sendInviteEmail();
+        return invite.toJSON();
+      }),
+    );
+    res.status(StatusCodes.CREATED).json(payload);
+  } catch (error) {
+    console.log(error);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+  }
+});
+
 router.post('/:id/resend', interceptors.requireAdmin, async (req, res) => {
   await models.sequelize.transaction(async (transaction) => {
     const invite = await models.Invite.findByPk(req.params.id, { transaction });

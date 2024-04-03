@@ -53,6 +53,34 @@ describe('/api/invites', () => {
     });
   });
 
+  describe('POST /bulk', () => {
+    it('creates and sends multiple Invites', async () => {
+      const response = await testSession
+        .post('/api/invites/bulk')
+        .set('Accept', 'application/json')
+        .send({
+          recipients: `invitee.1@test.com
+invitee.2@test.com
+John Doe <john.doe@test.com>, "Jane M. Doe" <jane.m.doe@test.com>`,
+          message: 'Welcome!',
+        })
+        .expect(StatusCodes.CREATED);
+
+      assert.deepStrictEqual(response.body?.length, 4);
+
+      const emails = nodemailerMock.mock.getSentMail();
+      assert.deepStrictEqual(emails.length, 4);
+
+      const tos = emails.map((e) => e.to).sort();
+      assert.deepStrictEqual(tos, [
+        '"Jane M. Doe" <jane.m.doe@test.com>',
+        '"John Doe" <john.doe@test.com>',
+        'invitee.1@test.com',
+        'invitee.2@test.com',
+      ]);
+    });
+  });
+
   describe('GET /:id', () => {
     it('returns an Invite by id', async () => {
       const response = await testSession

@@ -76,6 +76,9 @@ const Api = {
     create(data) {
       return instance.post('/api/invites', data);
     },
+    createBulk(data) {
+      return instance.post('/api/invites/bulk', data);
+    },
     get(id) {
       return instance.get(`/api/invites/${id}`);
     },
