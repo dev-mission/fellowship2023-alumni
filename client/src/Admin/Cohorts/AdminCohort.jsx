@@ -53,6 +53,12 @@ function AdminCohortForm() {
                 Delete Cohort
               </button>
             </div>
+            <h2>Users</h2>
+            <div className="mb-e">
+              <Link className="btn btn-outline-primary me-2" to="invite">
+                Invite
+              </Link>
+            </div>
           </>
         )}
       </main>
