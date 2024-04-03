@@ -17,7 +17,7 @@ describe('models.PostTag', () => {
     });
 
     assert.deepStrictEqual(await models.PostTag.count(), 4);
-    // assert.notDeepStrictEqual(record.id, null);
+    assert.notDeepStrictEqual(record.id, null);
     assert.deepStrictEqual(record.PostId, 101);
     assert.deepStrictEqual(record.TagId, 10001);
   });
