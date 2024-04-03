@@ -1,0 +1,26 @@
+[
+  {
+    "model": "PostTag",
+    "data": {
+      "id": 10,
+      "PostId": 100,
+      "TagId": 10000
+    }
+  },
+  {
+    "model": "PostTag",
+    "data": {
+      "id": 11,
+      "PostId": 100,
+      "TagId": 10001
+    }
+  },
+  {
+    "model": "PostTag",
+    "data": {
+      "id": 12,
+      "PostId": 101,
+      "TagId": 10000
+    }
+  }
+]

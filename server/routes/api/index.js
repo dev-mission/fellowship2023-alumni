@@ -10,6 +10,7 @@ import tagsRoutes from './tags.js';
 import organizationsRoutes from './organizations.js';
 import programsRoutes from './programs.js';
 import postsRoutes from './posts.js';
+import postTagsRoutes from './posttags.js';
 
 const router = express.Router();
 
@@ -24,5 +25,6 @@ router.use('/tags', tagsRoutes);
 router.use('/organizations', organizationsRoutes);
 router.use('/programs', programsRoutes);
 router.use('/posts', postsRoutes);
+router.use('/posttags', postTagsRoutes);
 
 export default router;
