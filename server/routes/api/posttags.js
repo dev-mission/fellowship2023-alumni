@@ -24,7 +24,7 @@ router.post('/', interceptors.requireLogin, async (req, res) => {
   }
 });
 
-router.delete('/:id', interceptors.requireLogin,  async (req, res) => {
+router.delete('/:id', interceptors.requireLogin, async (req, res) => {
   try {
     const record = await models.PostTag.findByPk(req.params.id);
     await record.destroy();
