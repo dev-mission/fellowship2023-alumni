@@ -2,7 +2,7 @@
   {
     "model": "Bookmark",
     "data": {
-      "id": 1,
+      "id": 50,
       "UserId": 1,
       "PostId": 100
     }
@@ -10,7 +10,7 @@
   {
     "model": "Bookmark",
     "data": {
-      "id": 2,
+      "id": 51,
       "UserId": 1,
       "PostId": 101
     }
@@ -18,7 +18,7 @@
   {
     "model": "Bookmark",
     "data": {
-      "id": 3,
+      "id": 52,
       "UserId": 2,
       "PostId": 100
     }

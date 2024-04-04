@@ -23,7 +23,7 @@ describe('models.Bookmark', () => {
   });
 
   it('finds a Bookmark record by its id', async () => {
-    const record = await models.Bookmark.findByPk(1);
+    const record = await models.Bookmark.findByPk(50);
     assert.notDeepStrictEqual(record, null);
     assert.deepStrictEqual(record.UserId, 1);
   });
@@ -38,7 +38,7 @@ describe('models.Bookmark', () => {
 
   it('deletes a Bookmark record', async () => {
     assert.deepStrictEqual(await models.Bookmark.count(), 3);
-    const record = await models.Bookmark.findByPk(1);
+    const record = await models.Bookmark.findByPk(50);
     await record.destroy();
     assert.deepStrictEqual(await models.Bookmark.count(), 2);
   });

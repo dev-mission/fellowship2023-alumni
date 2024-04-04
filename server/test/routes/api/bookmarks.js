@@ -31,21 +31,21 @@ describe('/api/bookmarks', () => {
 
   it('updates an existing Bookmark', async () => {
     await testSession
-      .patch('/api/bookmarks/1')
+      .patch('/api/bookmarks/50')
       .send({
         UserId: 2,
         PostId: 101,
       })
       .expect(StatusCodes.OK);
-    const record = await models.Bookmark.findByPk(1);
+    const record = await models.Bookmark.findByPk(50);
     assert.deepStrictEqual(record.UserId, 2);
     assert.deepStrictEqual(record.PostId, 101);
   });
 
   it('deletes an existing Bookmark', async () => {
-    await testSession.delete('/api/bookmarks/1').expect(StatusCodes.OK);
+    await testSession.delete('/api/bookmarks/50').expect(StatusCodes.OK);
 
-    const record = await models.Bookmark.findByPk(1);
+    const record = await models.Bookmark.findByPk(50);
     assert.deepStrictEqual(record, null);
   });
 
@@ -57,7 +57,7 @@ describe('/api/bookmarks', () => {
   });
 
   it('fetch one Bookmark record from the Bookmarks table', async () => {
-    const response = await testSession.get('/api/bookmarks/1').expect(StatusCodes.OK);
+    const response = await testSession.get('/api/bookmarks/50').expect(StatusCodes.OK);
     assert.deepStrictEqual(response.body?.UserId, 1);
   });
 });
