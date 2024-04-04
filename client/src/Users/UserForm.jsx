@@ -11,6 +11,8 @@ import PhotoInput from '../Components/PhotoInput';
 import UnexpectedError from '../UnexpectedError';
 import ValidationError from '../ValidationError';
 
+import Form from 'react-bootstrap/Form';
+
 function UserForm() {
   const staticContext = useStaticContext();
   const authContext = useAuthContext();
@@ -82,7 +84,7 @@ function UserForm() {
           <div className="col col-sm-10 col-md-8 col-lg-6 col-xl-4">
             <div className="card">
               <div className="card-body">
-                <h2 className="card-title">My Account</h2>
+                <h2 className="card-title">Profile</h2>
                 {location.state?.flash && <div className="alert alert-success">{location.state?.flash}</div>}
                 <form onSubmit={onSubmit}>
                   {error && error.message && <div className="alert alert-danger">{error.message}</div>}
@@ -134,6 +136,98 @@ function UserForm() {
                     {error?.errorMessagesHTMLFor?.('lastName')}
                   </div>
                   <div className="mb-3">
+                    <label className="form-label" htmlFor="pronouns">
+                      Pronouns
+                    </label>
+                    <input
+                      type="text"
+                      className={classNames('form-control', { 'is-invalid': error?.errorsFor?.('pronouns') })}
+                      id="pronouns"
+                      name="pronouns"
+                      onChange={onChange}
+                      value={user.pronouns}
+                      placeholder="she/they..."
+                    />
+                    {error?.errorMessagesHTMLFor?.('pronouns')}
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="exampleFormControlTextarea1">Bio</label>
+                    <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Let our community know what you're up to or what types of roles you're looking for"></textarea>
+                  </div>
+                  <div className="mb-3">
+                    <label>Dev/Mission Affiliation</label>
+                    <Form.Select aria-label="Default select example">
+                      <option>Pre-Apprenticeship Student</option>
+                      <option value="1">Current Fellow</option>
+                      <option value="2">Fellowship Alum</option>
+                      <option value="3">CTA</option>
+                      <option value="4">Intern</option>
+                      <option value="5">Staff</option>
+                    </Form.Select>
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label" htmlFor="LinkedIn">
+                      LinkedIn
+                    </label>
+                    <input
+                      type="text"
+                      className={classNames('form-control', { 'is-invalid': error?.errorsFor?.('LinkedIn') })}
+                      id="LinkedIn"
+                      name="LinkedIn"
+                      onChange={onChange}
+                      value={user.LinkedIn}
+                      placeholder="Enter LinkedIn Profile"
+                    />
+                    {error?.errorMessagesHTMLFor?.('linkedIn')}
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label" htmlFor="GitHub">
+                      GitHub
+                    </label>
+                    <input
+                      type="text"
+                      className={classNames('form-control', { 'is-invalid': error?.errorsFor?.('GitHub') })}
+                      id="GitHub"
+                      name="GitHub"
+                      onChange={onChange}
+                      value={user.GitHub}
+                      placeholder="Enter GitHub link"
+                    />
+                    {error?.errorMessagesHTMLFor?.('GitHub')}
+                  </div>
+                  <h3>Employment Info</h3>
+                  <div className="mb-3">
+                    <label className="form-label" htmlFor="currentCompany">
+                      Current Company
+                    </label>
+                    <input
+                      type="text"
+                      className={classNames('form-control', { 'is-invalid': error?.errorsFor?.('currentCompany') })}
+                      id="currentCompany"
+                      name="currentCompany"
+                      onChange={onChange}
+                      value={user.currentCompany}
+                      placeholder="Enter company name"
+                    />
+                    {error?.errorMessagesHTMLFor?.('currentCompany')}
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label" htmlFor="currentJobTitle">
+                      Current Job Title
+                    </label>
+                    <input
+                      type="text"
+                      className={classNames('form-control', { 'is-invalid': error?.errorsFor?.('currentJobTitle') })}
+                      id="currentJobTitle"
+                      name="currentJobTitle"
+                      onChange={onChange}
+                      value={user.currentJobTitle}
+                      placeholder="Enter job title"
+                    />
+                    {error?.errorMessagesHTMLFor?.('currentJobTitle')}
+                  </div>
+                  <h3>Contact Info</h3>
+                  <div className="mb-3">
                     <label className="form-label" htmlFor="email">
                       Email
                     </label>
@@ -144,6 +238,48 @@ function UserForm() {
                       name="email"
                       onChange={onChange}
                       value={user.email}
+                      placeholder="Keep up updated. Enter the email you use most often!"
+                    />
+                    {error?.errorMessagesHTMLFor?.('email')}
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label" htmlFor="phone">
+                      Phone
+                    </label>
+                    <input
+                      type="text"
+                      className={classNames('form-control', { 'is-invalid': error?.errorsFor?.('phone') })}
+                      id="phone"
+                      name="phone"
+                      onChange={onChange}
+                      value={user.phone}
+                      placeholder="Number we can best reach you!"
+                    />
+                    {error?.errorMessagesHTMLFor?.('phone')}
+                  </div>
+                  <div className="mb-3 d-grid">
+                    <button disabled={isUploading} className="btn btn-primary" type="submit">
+                      Save Changes
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div className="card">
+              <div className="card-body">
+                <h1>Account Settings</h1>
+                <div className="mb-3">
+                    <label className="form-label" htmlFor="email">
+                      Email
+                    </label>
+                    <input
+                      type="text"
+                      className={classNames('form-control', { 'is-invalid': error?.errorsFor?.('email') })}
+                      id="email"
+                      name="email"
+                      onChange={onChange}
+                      value={user.email}
+                      placeholder="Keep up updated. Enter the email you use most often!"
                     />
                     {error?.errorMessagesHTMLFor?.('email')}
                   </div>
@@ -182,12 +318,6 @@ function UserForm() {
                       {error?.errorMessagesHTMLFor?.('isAdmin')}
                     </div>
                   )}
-                  <div className="mb-3 d-grid">
-                    <button disabled={isUploading} className="btn btn-primary" type="submit">
-                      Submit
-                    </button>
-                  </div>
-                </form>
               </div>
             </div>
           </div>
