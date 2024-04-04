@@ -1,6 +1,6 @@
 import { Model } from 'sequelize';
 
-export default function (sequelize) {
+export default function (sequelize, DataTypes) {
   class PostTag extends Model {
     /**
      * Helper method for defining associations.
@@ -14,7 +14,14 @@ export default function (sequelize) {
     }
   }
   PostTag.init(
-    {},
+    {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER,
+      },
+    },
     {
       sequelize,
       modelName: 'PostTag',
