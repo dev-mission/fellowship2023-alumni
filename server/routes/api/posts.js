@@ -26,7 +26,7 @@ router.post('/', interceptors.requireAdmin, async (req, res) => {
     ]);
     data.UserId = req.user.id;
     const record = await models.Post.create(data);
-    
+
     res.status(StatusCodes.CREATED).json(record.toJSON());
   } catch (error) {
     console.log(error);
@@ -41,7 +41,7 @@ router.post('/', interceptors.requireAdmin, async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', interceptors.requireAdmin, async (req, res) => {
   try {
     const record = await models.Post.findByPk(req.params.id);
     await record.destroy();
@@ -52,12 +52,12 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-router.get('/', async (req, res) => {
+router.get('/', interceptors.requireLogin, async (req, res) => {
   const records = await models.Post.findAll();
   res.json(records.map((r) => r.toJSON()));
 });
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', interceptors.requireAdmin, async (req, res) => {
   try {
     const record = await models.Post.findByPk(req.params.id);
     await record.update(
@@ -73,7 +73,7 @@ router.patch('/:id', async (req, res) => {
         'isRecurring',
         'isArchived',
         'workLocation',
-        'UserId',
+        // 'UserId',
         'OrganizationId',
         'ProgramId',
       ]),
@@ -92,7 +92,7 @@ router.patch('/:id', async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', interceptors.requireLogin, async (req, res) => {
   try {
     const record = await models.Post.findByPk(req.params.id);
     res.json(record.toJSON());
