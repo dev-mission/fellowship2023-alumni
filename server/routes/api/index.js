@@ -11,6 +11,7 @@ import organizationsRoutes from './organizations.js';
 import programsRoutes from './programs.js';
 import postsRoutes from './posts.js';
 import bookmarksRoutes from './bookmarks.js';
+import postTagsRoutes from './posttags.js';
 
 const router = express.Router();
 
@@ -26,5 +27,6 @@ router.use('/organizations', organizationsRoutes);
 router.use('/programs', programsRoutes);
 router.use('/posts', postsRoutes);
 router.use('/bookmarks', bookmarksRoutes);
+router.use('/posttags', postTagsRoutes);
 
 export default router;
