@@ -11,8 +11,13 @@ describe('/api/programs', () => {
 
   beforeEach(async () => {
     // Organizations has to be before Programs since Programs need an Organization Id
-    await helper.loadFixtures(['organizations', 'programs']);
+    await helper.loadFixtures(['users', 'organizations', 'programs']);
     testSession = session(app);
+    await testSession
+      .post('/api/auth/login')
+      .set('Accept', 'application/json')
+      .send({ email: 'admin.user@test.com', password: 'abcd1234' })
+      .expect(StatusCodes.OK);
   });
 
   it('creates a new Program', async () => {

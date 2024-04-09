@@ -12,6 +12,11 @@ describe('/api/bookmarks', () => {
   beforeEach(async () => {
     await helper.loadFixtures(['users', 'organizations', 'programs', 'posts', 'bookmarks']);
     testSession = session(app);
+    await testSession
+      .post('/api/auth/login')
+      .set('Accept', 'application/json')
+      .send({ email: 'regular.user@test.com', password: 'abcd1234' })
+      .expect(StatusCodes.OK);
   });
 
   it('creates a new Bookmark', async () => {
