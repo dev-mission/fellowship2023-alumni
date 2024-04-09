@@ -10,8 +10,13 @@ describe('/api/tags', () => {
   let testSession;
 
   beforeEach(async () => {
-    await helper.loadFixtures(['tags']);
+    await helper.loadFixtures(['users', 'tags']);
     testSession = session(app);
+    await testSession
+      .post('/api/auth/login')
+      .set('Accept', 'application/json')
+      .send({ email: 'admin.user@test.com', password: 'abcd1234' })
+      .expect(StatusCodes.OK);
   });
 
   it('creates a new Tag', async () => {

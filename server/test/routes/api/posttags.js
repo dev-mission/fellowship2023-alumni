@@ -12,6 +12,11 @@ describe('/api/posttags', () => {
   beforeEach(async () => {
     await helper.loadFixtures(['users', 'organizations', 'programs', 'posts', 'tags', 'posttags']);
     testSession = session(app);
+    await testSession
+      .post('/api/auth/login')
+      .set('Accept', 'application/json')
+      .send({ email: 'admin.user@test.com', password: 'abcd1234' })
+      .expect(StatusCodes.OK);
   });
 
   it('creates a new PostTag', async () => {

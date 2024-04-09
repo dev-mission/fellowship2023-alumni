@@ -1,14 +1,18 @@
 import express from 'express';
 import { StatusCodes } from 'http-status-codes';
 import _ from 'lodash';
+import interceptors from '../interceptors.js';
 
 import models from '../../models/index.js';
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.post('/', interceptors.requireLogin, async (req, res) => {
   try {
-    const record = await models.Bookmark.create(_.pick(req.body, ['UserId', 'PostId']));
+    const data = _.pick(req.body, ['PostId']);
+    data.UserId = req.user.id;
+
+    const record = await models.Bookmark.create(data);
     res.status(StatusCodes.CREATED).json(record.toJSON());
   } catch (error) {
     console.log(error);
@@ -23,7 +27,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', interceptors.requireLogin, async (req, res) => {
   try {
     const record = await models.Bookmark.findByPk(req.params.id);
     await record.destroy();
@@ -34,15 +38,17 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-router.get('/', async (req, res) => {
+router.get('/', interceptors.requireLogin, async (req, res) => {
   const records = await models.Bookmark.findAll();
   res.json(records.map((r) => r.toJSON()));
 });
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', interceptors.requireLogin, async (req, res) => {
   try {
+    const data = _.pick(req.body, ['PostId']);
+    data.UserId = req.user.id;
     const record = await models.Bookmark.findByPk(req.params.id);
-    await record.update(_.pick(req.body, ['UserId', 'PostId']));
+    await record.update(data);
     res.json(record.toJSON());
   } catch (error) {
     console.log(error);
@@ -57,7 +63,7 @@ router.patch('/:id', async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', interceptors.requireLogin, async (req, res) => {
   try {
     const record = await models.Bookmark.findByPk(req.params.id);
     res.json(record.toJSON());
