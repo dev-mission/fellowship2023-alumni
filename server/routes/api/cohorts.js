@@ -1,12 +1,13 @@
 import express from 'express';
 import { StatusCodes } from 'http-status-codes';
 import _ from 'lodash';
+import interceptors from '../interceptors.js';
 
 import models from '../../models/index.js';
 
 const router = express.Router();
 
-router.post('/', async (req, res) => {
+router.post('/', interceptors.requireAdmin, async (req, res) => {
   try {
     const record = await models.Cohort.create(_.pick(req.body, ['cohortNumber', 'graduatedOn', 'year', 'term', 'affiliation']));
     res.status(StatusCodes.CREATED).json(record.toJSON());
@@ -23,7 +24,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', interceptors.requireAdmin, async (req, res) => {
   try {
     const record = await models.Cohort.findByPk(req.params.id);
     await record.destroy();
@@ -34,14 +35,14 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-router.get('/', async (req, res) => {
+router.get('/', interceptors.requireLogin, async (req, res) => {
   const records = await models.Cohort.findAll({
     order: [['cohortNumber', 'DESC']],
   });
   res.json(records.map((r) => r.toJSON()));
 });
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', interceptors.requireAdmin, async (req, res) => {
   try {
     const record = await models.Cohort.findByPk(req.params.id);
     await record.update(_.pick(req.body, ['cohortNumber', 'graduatedOn', 'year', 'term', 'affiliation']));
@@ -59,7 +60,7 @@ router.patch('/:id', async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', interceptors.requireLogin, async (req, res) => {
   try {
     const record = await models.Cohort.findByPk(req.params.id);
     res.json(record.toJSON());

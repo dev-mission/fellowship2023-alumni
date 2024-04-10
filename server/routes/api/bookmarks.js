@@ -7,26 +7,12 @@ import models from '../../models/index.js';
 
 const router = express.Router();
 
-router.post('/', interceptors.requireAdmin, async (req, res) => {
+router.post('/', interceptors.requireLogin, async (req, res) => {
   try {
-    const data = _.pick(req.body, [
-      'postedOn',
-      'expiresOn',
-      'title',
-      'description',
-      'applicationUrl',
-      'isPaidOpportunity',
-      'entryCost',
-      'referredBy',
-      'isRecurring',
-      'isArchived',
-      'workLocation',
-      'OrganizationId',
-      'ProgramId',
-    ]);
+    const data = _.pick(req.body, ['PostId']);
     data.UserId = req.user.id;
-    const record = await models.Post.create(data);
 
+    const record = await models.Bookmark.create(data);
     res.status(StatusCodes.CREATED).json(record.toJSON());
   } catch (error) {
     console.log(error);
@@ -41,9 +27,9 @@ router.post('/', interceptors.requireAdmin, async (req, res) => {
   }
 });
 
-router.delete('/:id', interceptors.requireAdmin, async (req, res) => {
+router.delete('/:id', interceptors.requireLogin, async (req, res) => {
   try {
-    const record = await models.Post.findByPk(req.params.id);
+    const record = await models.Bookmark.findByPk(req.params.id);
     await record.destroy();
     res.status(StatusCodes.OK).end();
   } catch (error) {
@@ -53,31 +39,16 @@ router.delete('/:id', interceptors.requireAdmin, async (req, res) => {
 });
 
 router.get('/', interceptors.requireLogin, async (req, res) => {
-  const records = await models.Post.findAll();
+  const records = await models.Bookmark.findAll();
   res.json(records.map((r) => r.toJSON()));
 });
 
-router.patch('/:id', interceptors.requireAdmin, async (req, res) => {
+router.patch('/:id', interceptors.requireLogin, async (req, res) => {
   try {
-    const record = await models.Post.findByPk(req.params.id);
-    await record.update(
-      _.pick(req.body, [
-        'postedOn',
-        'expiresOn',
-        'title',
-        'description',
-        'applicationUrl',
-        'isPaidOpportunity',
-        'entryCost',
-        'referredBy',
-        'isRecurring',
-        'isArchived',
-        'workLocation',
-        // 'UserId',
-        'OrganizationId',
-        'ProgramId',
-      ]),
-    );
+    const data = _.pick(req.body, ['PostId']);
+    data.UserId = req.user.id;
+    const record = await models.Bookmark.findByPk(req.params.id);
+    await record.update(data);
     res.json(record.toJSON());
   } catch (error) {
     console.log(error);
@@ -94,7 +65,7 @@ router.patch('/:id', interceptors.requireAdmin, async (req, res) => {
 
 router.get('/:id', interceptors.requireLogin, async (req, res) => {
   try {
-    const record = await models.Post.findByPk(req.params.id);
+    const record = await models.Bookmark.findByPk(req.params.id);
     res.json(record.toJSON());
   } catch (err) {
     console.log(err);

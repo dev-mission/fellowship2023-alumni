@@ -10,8 +10,13 @@ describe('/api/cohorts', () => {
   let testSession;
 
   beforeEach(async () => {
-    await helper.loadFixtures(['cohorts']);
+    await helper.loadFixtures(['users', 'cohorts']);
     testSession = session(app);
+    await testSession
+      .post('/api/auth/login')
+      .set('Accept', 'application/json')
+      .send({ email: 'admin.user@test.com', password: 'abcd1234' })
+      .expect(StatusCodes.OK);
   });
 
   it('creates a new Cohort', async () => {
