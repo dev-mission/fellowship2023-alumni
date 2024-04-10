@@ -17,6 +17,7 @@ export default function (sequelize, DataTypes) {
       isJob: DataTypes.BOOLEAN,
       isVolunteer: DataTypes.BOOLEAN,
       isOther: DataTypes.BOOLEAN,
+      otherText: DataTypes.STRING,
       expiresOn: DataTypes.DATE,
     },
     {
