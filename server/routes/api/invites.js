@@ -115,7 +115,11 @@ router.post('/:id/accept', async (req, res, next) => {
             res.status(StatusCodes.FORBIDDEN).end();
             return;
           }
-          user = models.User.build(_.pick(req.body, ['firstName', 'lastName', 'username', 'email', 'password', 'confirmPassword']));
+          const { CohortId } = invite;
+          user = models.User.build({
+            ..._.pick(req.body, ['firstName', 'lastName', 'username', 'email', 'password', 'confirmPassword']),
+            CohortId,
+          });
           await user.save({ transaction });
           await invite.update(
             {

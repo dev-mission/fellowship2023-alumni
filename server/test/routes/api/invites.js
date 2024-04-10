@@ -70,8 +70,8 @@ John Doe <john.doe@test.com>, "Jane M. Doe" <jane.m.doe@test.com>`,
 
       assert.deepStrictEqual(response.body?.length, 4);
 
-      const record = await models.Invite.findByPk(response.body[0].id);
-      assert.deepStrictEqual(record.CohortId, 10000);
+      const invite = await models.Invite.findByPk(response.body[0].id);
+      assert.deepStrictEqual(invite.CohortId, 10000);
 
       const emails = nodemailerMock.mock.getSentMail();
       assert.deepStrictEqual(emails.length, 4);
@@ -101,7 +101,7 @@ John Doe <john.doe@test.com>, "Jane M. Doe" <jane.m.doe@test.com>`,
         email: 'invited.user.1@test.com',
         message: 'This is an invitation to Invited User 1.',
         createdAt: '2022-01-29T22:58:56.000Z',
-        CohortId: null,
+        CohortId: 10000,
         CreatedByUserId: 1,
         acceptedAt: null,
         AcceptedByUserId: null,
@@ -153,10 +153,13 @@ John Doe <john.doe@test.com>, "Jane M. Doe" <jane.m.doe@test.com>`,
         roles: null,
         bio: null,
         userName: null,
-        CohortId: null,
+        CohortId: 10000,
         linkedin: null,
         currentPosition: null,
       });
+
+      const user = await models.User.findByPk(id);
+      assert.deepStrictEqual(user.CohortId, 10000);
 
       const invite = await models.Invite.findByPk('14a500b7-f14c-48cd-b815-3685a8b54370');
       assert(invite.acceptedAt);
