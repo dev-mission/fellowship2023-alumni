@@ -147,15 +147,14 @@ John Doe <john.doe@test.com>, "Jane M. Doe" <jane.m.doe@test.com>`,
         isAdmin: false,
         picture: null,
         pictureUrl: null,
-
-        // updated User model
-
         roles: null,
         bio: null,
         userName: null,
         CohortId: 10000,
         linkedin: null,
         currentPosition: null,
+        createdAt: response.body.createdAt,
+        updatedAt: response.body.updatedAt,
       });
 
       const user = await models.User.findByPk(id);
