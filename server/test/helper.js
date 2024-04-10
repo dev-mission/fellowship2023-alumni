@@ -57,6 +57,7 @@ async function resetDatabase() {
     DELETE FROM "PostTags";
     DELETE FROM "Posts";
     DELETE FROM "Invites";
+    DELETE FROM "SurveyResponses";
     DELETE FROM "Users";
     DELETE FROM "Cohorts";
     DELETE FROM "Tags";
