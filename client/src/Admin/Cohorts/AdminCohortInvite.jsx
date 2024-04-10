@@ -10,10 +10,11 @@ import UnexpectedError from '../../UnexpectedError';
 function AdminInviteCohort() {
   const staticContext = useStaticContext();
   const navigate = useNavigate();
-  const { cohortId } = useParams();
+  const { cohortId: CohortId } = useParams();
   const [data, setData] = useState({
     recipients: '',
     message: '',
+    CohortId,
   });
   const [error, setError] = useState();
   const [isLoading, setLoading] = useState(false);
@@ -23,7 +24,7 @@ function AdminInviteCohort() {
     setLoading(true);
     try {
       const response = await Api.invites.createBulk(data);
-      navigate(`/admin/cohorts/${cohortId}`, { flash: `${response.data.length} invites sent!` });
+      navigate(`/admin/cohorts/${CohortId}`, { flash: `${response.data.length} invites sent!` });
     } catch (error) {
       setLoading(false);
       setError(new UnexpectedError());
