@@ -29,7 +29,7 @@ export default function (sequelize, DataTypes) {
 
     toJSON() {
       // after new User model
-      return _.pick(this.get(), [
+      const data = _.pick(this.get(), [
         'id',
         'firstName',
         'lastName',
@@ -46,6 +46,10 @@ export default function (sequelize, DataTypes) {
         'updatedAt',
         'createdAt',
       ]);
+      if (this.Cohort) {
+        data.Cohort = this.Cohort.toJSON();
+      }
+      return data;
     }
 
     hashPassword(password, options) {
