@@ -11,6 +11,7 @@ export default function (sequelize, DataTypes) {
      */
     static associate(models) {
       // define association here
+      Invite.belongsTo(models.Cohort);
       Invite.belongsTo(models.User, { as: 'AcceptedByUser' });
       Invite.belongsTo(models.User, { as: 'RevokedByUser' });
       Invite.belongsTo(models.User, { as: 'CreatedByUser' });
@@ -23,6 +24,7 @@ export default function (sequelize, DataTypes) {
         'lastName',
         'email',
         'message',
+        'CohortId',
         'createdAt',
         'CreatedByUserId',
         'acceptedAt',

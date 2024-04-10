@@ -23,13 +23,14 @@ router.get('/', interceptors.requireAdmin, async (req, res) => {
 });
 
 router.post('/', interceptors.requireAdmin, async (req, res) => {
-  const invite = models.Invite.build(_.pick(req.body, ['firstName', 'lastName', 'email', 'message']));
+  const invite = models.Invite.build(_.pick(req.body, ['firstName', 'lastName', 'email', 'message', 'CohortId']));
   invite.CreatedByUserId = req.user.id;
   try {
     await invite.save();
     await invite.sendInviteEmail();
     res.status(StatusCodes.CREATED).json(invite.toJSON());
   } catch (error) {
+    console.log(error);
     if (error.name === 'SequelizeValidationError') {
       res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
         status: StatusCodes.UNPROCESSABLE_ENTITY,
@@ -43,13 +44,14 @@ router.post('/', interceptors.requireAdmin, async (req, res) => {
 
 router.post('/bulk', interceptors.requireAdmin, async (req, res) => {
   try {
-    const { recipients, message } = req.body;
+    const { recipients, message, CohortId } = req.body;
     const payload = await Promise.all(
       [...recipients.matchAll(/(?:"?([^"<@\n]+)"? ?<)?([^@< ,\n]+@[^ ,>\n]+)>?/g)].map(async (match) => {
         const [, fullName, email] = match;
         const data = {
           email,
           message,
+          CohortId,
           CreatedByUserId: req.user.id,
         };
         if (fullName) {
