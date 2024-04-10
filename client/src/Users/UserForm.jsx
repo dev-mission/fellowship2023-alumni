@@ -82,11 +82,27 @@ function UserForm() {
           <div className="col col-sm-10 col-md-8 col-lg-6 col-xl-4">
             <div className="card">
               <div className="card-body">
-                <h2 className="card-title">My Account</h2>
+                <h2 className="card-title mb-3">My Account</h2>
                 {location.state?.flash && <div className="alert alert-success">{location.state?.flash}</div>}
                 <form onSubmit={onSubmit}>
                   {error && error.message && <div className="alert alert-danger">{error.message}</div>}
                   {success && <div className="alert alert-info">Your account has been updated!</div>}
+                  {user.Cohort && (
+                    <div className="mb-3">
+                      <label className="form-label" htmlFor="Cohort">
+                        Cohort
+                      </label>
+                      <input
+                        type="text"
+                        disabled
+                        readOnly
+                        className="form-control"
+                        id="Cohort"
+                        name="Cohort"
+                        value={`${user.Cohort.affiliation} ${user.Cohort.term} ${user.Cohort.year}`}
+                      />
+                    </div>
+                  )}
                   <div className="mb-3">
                     <label className="form-label" htmlFor="picture">
                       Picture

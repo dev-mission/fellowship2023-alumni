@@ -11,6 +11,7 @@ export default function (sequelize, DataTypes) {
      */
     static associate(models) {
       // define association here
+      Invite.belongsTo(models.Cohort);
       Invite.belongsTo(models.User, { as: 'AcceptedByUser' });
       Invite.belongsTo(models.User, { as: 'RevokedByUser' });
       Invite.belongsTo(models.User, { as: 'CreatedByUser' });
@@ -23,6 +24,7 @@ export default function (sequelize, DataTypes) {
         'lastName',
         'email',
         'message',
+        'CohortId',
         'createdAt',
         'CreatedByUserId',
         'acceptedAt',
@@ -51,21 +53,8 @@ export default function (sequelize, DataTypes) {
 
   Invite.init(
     {
-      firstName: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'First name cannot be blank',
-          },
-          notEmpty: {
-            msg: 'First name cannot be blank',
-          },
-        },
-      },
-      lastName: {
-        type: DataTypes.STRING,
-      },
+      firstName: DataTypes.STRING,
+      lastName: DataTypes.STRING,
       email: {
         type: DataTypes.CITEXT,
         allowNull: false,
@@ -81,13 +70,17 @@ export default function (sequelize, DataTypes) {
       fullName: {
         type: DataTypes.VIRTUAL,
         get() {
-          return `${this.firstName} ${this.lastName}`.trim();
+          return `${this.firstName ?? ''} ${this.lastName ?? ''}`.trim();
         },
       },
       fullNameAndEmail: {
         type: DataTypes.VIRTUAL,
         get() {
-          return `${this.fullName} <${this.email}>`;
+          const { fullName } = this;
+          if (fullName) {
+            return `"${this.fullName}" <${this.email}>`.trim();
+          }
+          return this.email;
         },
       },
       message: DataTypes.TEXT,

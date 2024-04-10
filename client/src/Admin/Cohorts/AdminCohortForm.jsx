@@ -55,7 +55,7 @@ function AdminCohortForm() {
       } else {
         const response = await Api.cohorts.create(cohort);
         const { id } = response.data;
-        navigate(`/admin/cohorts/${id}`);
+        navigate(`/admin/cohorts/${id}`, { state: { flash: 'Cohort created!' } });
       }
     } catch (error) {
       if (error.response?.status === StatusCodes.UNPROCESSABLE_ENTITY) {

@@ -41,15 +41,14 @@ describe('/api/auth', () => {
         isAdmin: false,
         picture: null,
         pictureUrl: null,
-
-        // updated User model
-
         roles: null,
         bio: null,
         userName: null,
         CohortId: null,
         linkedin: null,
         currentPosition: null,
+        createdAt: response.body.createdAt,
+        updatedAt: response.body.updatedAt,
       });
     });
 

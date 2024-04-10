@@ -42,7 +42,7 @@ function AdminCohortsList() {
             </thead>
             <tbody>
               {cohorts.map((cohort) => (
-                <tr key={cohort.id} onClick={() => navigate(`${cohort.id}`)}>
+                <tr key={cohort.id} onClick={() => navigate(`${cohort.id}`)} className="clickable">
                   <td>{cohort.cohortNumber}</td>
                   <td>{cohort.affiliation}</td>
                   <td>{cohort.year}</td>
