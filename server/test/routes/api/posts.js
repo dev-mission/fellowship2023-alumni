@@ -34,7 +34,7 @@ describe('/api/posts', () => {
         isRecurring: true,
         isArchived: true,
         workLocation: 'San Francisco, CA',
-        UserId: 1,
+        // UserId: 1, (admin.user@test.com is UserId: 1)
         OrganizationId: 10002,
         ProgramId: 1000,
       })
@@ -73,7 +73,7 @@ describe('/api/posts', () => {
         isRecurring: true,
         isArchived: true,
         workLocation: 'San Francisco, CA',
-        UserId: 1,
+        // UserId: 1, (admin.user@test.com is UserId: 1)
         OrganizationId: 10002,
         ProgramId: 1000,
       })
