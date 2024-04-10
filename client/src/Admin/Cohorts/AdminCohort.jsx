@@ -12,10 +12,14 @@ function AdminCohortForm() {
   const { cohortId } = useParams();
 
   const [cohort, setCohort] = useState();
+  const [invites, setInvites] = useState();
+  const [users, setUsers] = useState();
 
   useEffect(() => {
     if (cohortId) {
       Api.cohorts.get(cohortId).then((response) => setCohort(response.data));
+      Api.cohorts.getInvites(cohortId).then((response) => setInvites(response.data));
+      Api.cohorts.getUsers(cohortId).then((response) => setUsers(response.data));
     }
   }, [cohortId]);
 
@@ -53,12 +57,57 @@ function AdminCohortForm() {
                 Delete Cohort
               </button>
             </div>
-            <h2>Users</h2>
-            <div className="mb-e">
+            <h2>Invites</h2>
+            <div className="mb-3">
               <Link className="btn btn-outline-primary me-2" to="invite">
                 Invite
               </Link>
             </div>
+            <table className="table table-striped">
+              <thead>
+                <tr>
+                  <th className="w-20">First name</th>
+                  <th className="w-20">Last name</th>
+                  <th className="w-20">Email</th>
+                  <th className="w-20">Invited</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {invites?.map((i) => (
+                  <tr key={i.id}>
+                    <td>{i.firstName}</td>
+                    <td>{i.lastName}</td>
+                    <td>{i.email}</td>
+                    <td>{DateTime.fromISO(i.createdAt).toLocaleString(DateTime.DATETIME_SHORT)}</td>
+                    <td></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <h2>Users</h2>
+            <table className="table table-striped">
+              <thead>
+                <tr>
+                  <th className="w-20">First name</th>
+                  <th className="w-20">Last name</th>
+                  <th className="w-20">Email</th>
+                  <th className="w-20">Joined</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {users?.map((u) => (
+                  <tr key={u.id}>
+                    <td>{u.firstName}</td>
+                    <td>{u.lastName}</td>
+                    <td>{u.email}</td>
+                    <td>{DateTime.fromISO(u.createdAt).toLocaleString(DateTime.DATETIME_SHORT)}</td>
+                    <td></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </>
         )}
       </main>

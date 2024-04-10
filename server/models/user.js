@@ -28,9 +28,6 @@ export default function (sequelize, DataTypes) {
     }
 
     toJSON() {
-      // before updating User model
-      // return _.pick(this.get(), ['id', 'firstName', 'lastName', 'email', 'picture', 'pictureUrl', 'isAdmin']);
-
       // after new User model
       return _.pick(this.get(), [
         'id',
@@ -46,6 +43,8 @@ export default function (sequelize, DataTypes) {
         'CohortId',
         'linkedin',
         'currentPosition',
+        'updatedAt',
+        'createdAt',
       ]);
     }
 
