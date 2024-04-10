@@ -81,7 +81,7 @@ function AdminCohortForm() {
               {cohort.term} {cohort.year}
             </h2>
             <h3>Graduated: {DateTime.fromISO(cohort.graduatedOn).toLocaleString(DateTime.DATETIME_FULL)}</h3>
-            <div className="mb-3">
+            <div className="mb-5">
               <Link className="btn btn-outline-primary me-2" to="edit">
                 Edit Cohort
               </Link>
@@ -89,9 +89,9 @@ function AdminCohortForm() {
                 Delete Cohort
               </button>
             </div>
-            <h2>Invites</h2>
-            <div className="mb-3">
-              <Link className="btn btn-outline-primary me-2" to="invite">
+            <div className="d-flex align-items-center">
+              <h2>Invites</h2>
+              <Link className="btn btn-outline-primary ms-3 mb-2" to="invite">
                 Invite
               </Link>
             </div>
