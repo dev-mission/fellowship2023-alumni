@@ -62,6 +62,12 @@ const Api = {
     get(id) {
       return instance.get(`/api/cohorts/${id}`);
     },
+    getInvites(id) {
+      return instance.get(`/api/cohorts/${id}/invites`);
+    },
+    getUsers(id) {
+      return instance.get(`/api/cohorts/${id}/users`);
+    },
     update(id, data) {
       return instance.patch(`/api/cohorts/${id}`, data);
     },
@@ -75,6 +81,9 @@ const Api = {
     },
     create(data) {
       return instance.post('/api/invites', data);
+    },
+    createBulk(data) {
+      return instance.post('/api/invites/bulk', data);
     },
     get(id) {
       return instance.get(`/api/invites/${id}`);

@@ -10,6 +10,7 @@ export default function (sequelize, DataTypes) {
     // eslint-disable-next-line no-unused-vars
     static associate(models) {
       // define association here
+      Cohort.hasMany(models.Invite);
       Cohort.hasMany(models.User);
     }
   }

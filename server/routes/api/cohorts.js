@@ -60,6 +60,52 @@ router.patch('/:id', interceptors.requireAdmin, async (req, res) => {
   }
 });
 
+router.get('/:id/invites', interceptors.requireLogin, async (req, res) => {
+  try {
+    const record = await models.Cohort.findByPk(req.params.id);
+    if (record) {
+      const invites = await record.getInvites({
+        where: {
+          acceptedAt: null,
+          revokedAt: null,
+        },
+        order: [
+          ['firstName', 'ASC'],
+          ['lastName', 'ASC'],
+          ['email', 'ASC'],
+        ],
+      });
+      res.json(invites.map((i) => i.toJSON()));
+    } else {
+      res.status(StatusCodes.NOT_FOUND).end();
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+  }
+});
+
+router.get('/:id/users', interceptors.requireLogin, async (req, res) => {
+  try {
+    const record = await models.Cohort.findByPk(req.params.id);
+    if (record) {
+      const users = await record.getUsers({
+        order: [
+          ['firstName', 'ASC'],
+          ['lastName', 'ASC'],
+          ['email', 'ASC'],
+        ],
+      });
+      res.json(users.map((u) => u.toJSON()));
+    } else {
+      res.status(StatusCodes.NOT_FOUND).end();
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
+  }
+});
+
 router.get('/:id', interceptors.requireLogin, async (req, res) => {
   try {
     const record = await models.Cohort.findByPk(req.params.id);

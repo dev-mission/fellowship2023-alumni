@@ -36,7 +36,9 @@ router.get('/:id', interceptors.requireLogin, async (req, res) => {
     return;
   }
   try {
-    const user = await models.User.findByPk(req.params.id);
+    const user = await models.User.findByPk(req.params.id, {
+      include: models.Cohort,
+    });
     if (user) {
       res.json(user.toJSON());
     } else {
