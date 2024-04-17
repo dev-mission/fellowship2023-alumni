@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.post('/', interceptors.requireLogin, async (req, res) => {
   try {
-    const data = _.pick(req.body, ['isJob', 'isVolunteer', 'isOther', 'expiresOn']);
+    const data = _.pick(req.body, ['isJob', 'isVolunteer', 'isOther', 'otherText', 'expiresOn']);
     data.UserId = req.user.id;
     const record = await models.SurveyResponse.create(data);
 
@@ -39,14 +39,14 @@ router.delete('/:id', interceptors.requireAdmin, async (req, res) => {
 });
 
 router.get('/', interceptors.requireAdmin, async (req, res) => {
-  const records = await models.SurveyResponse.findAll();
+  const records = await models.SurveyResponse.findAll({ include: models.User });
   res.json(records.map((r) => r.toJSON()));
 });
 
 router.patch('/:id', interceptors.requireAdmin, async (req, res) => {
   try {
     const record = await models.SurveyResponse.findByPk(req.params.id);
-    await record.update(_.pick(req.body, ['isJob', 'isVolunteer', 'isOther', 'expiresOn']));
+    await record.update(_.pick(req.body, ['isJob', 'isVolunteer', 'isOther', 'otherText', 'expiresOn']));
     res.json(record.toJSON());
   } catch (error) {
     console.log(error);
@@ -63,7 +63,7 @@ router.patch('/:id', interceptors.requireAdmin, async (req, res) => {
 
 router.get('/:id', interceptors.requireAdmin, async (req, res) => {
   try {
-    const record = await models.SurveyResponse.findByPk(req.params.id);
+    const record = await models.SurveyResponse.findByPk(req.params.id, { include: models.User });
     res.json(record.toJSON());
   } catch (err) {
     console.log(err);

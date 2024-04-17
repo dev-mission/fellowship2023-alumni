@@ -16,6 +16,7 @@ describe('models.SurveyResponse', () => {
       isJob: false,
       isVolunteer: false,
       isOther: true,
+      otherText: 'More info',
       expiresOn: '2061-01-01T00:00:00.000Z',
     });
 
@@ -25,6 +26,7 @@ describe('models.SurveyResponse', () => {
     assert.deepStrictEqual(record.isJob, false);
     assert.deepStrictEqual(record.isVolunteer, false);
     assert.deepStrictEqual(record.isOther, true);
+    assert.deepStrictEqual(record.otherText, 'More info');
     assert.deepStrictEqual(record.expiresOn, new Date('2061-01-01T00:00:00.000Z'));
   });
 
