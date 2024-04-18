@@ -4,7 +4,6 @@ import AdminCohortsRoutes from './Cohorts/AdminCohortsRoutes';
 import AdminUsersRoutes from './Users/AdminUsersRoutes';
 import AdminOrganizationsRoutes from './Organizations/AdminOrganizationsRoutes';
 
-
 function AdminRoutes() {
   return (
     <Routes>

@@ -44,7 +44,7 @@ function AdminOrganization() {
             <h2>
               {organization.description} {organization.url}
             </h2>
-            
+
             <div className="mb-3">
               <Link className="btn btn-outline-primary me-2" to="edit">
                 Edit Organization
