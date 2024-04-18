@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { DateTime } from 'luxon';
 
 import Api from '../../Api';
 import { useStaticContext } from '../../StaticContext';
@@ -38,9 +37,7 @@ function AdminTag() {
       <main className="container">
         {tag && (
           <>
-            <h1>
-              {tag.name}
-            </h1>
+            <h1>{tag.name}</h1>
             <div className="mb-3">
               <Link className="btn btn-outline-primary me-2" to="edit">
                 Edit Tag
