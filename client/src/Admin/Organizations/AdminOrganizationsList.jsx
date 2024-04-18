@@ -48,8 +48,8 @@ function AdminOrganizationsList() {
                   <td>{organization.description}</td>
                   <td>{organization.location}</td>
                   <td>{organization.url}</td>
-                  <td>WIP</td>
-                  <td>WIP</td>
+                  <td>{organization.postsCount}</td>
+                  <td>{organization.programsCount}</td>
                 </tr>
               ))}
             </tbody>
