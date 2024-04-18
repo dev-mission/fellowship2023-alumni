@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { DateTime } from 'luxon';
 
 import Api from '../../Api';
 import { useStaticContext } from '../../StaticContext';
@@ -38,12 +37,8 @@ function AdminProgram() {
       <main className="container">
         {program && (
           <>
-            <h1>
-              {program.name}
-            </h1>
-            <h2>
-              {program.description}
-            </h2>
+            <h1>{program.name}</h1>
+            <h2>{program.description}</h2>
             <div className="mb-3">
               <Link className="btn btn-outline-primary me-2" to="edit">
                 Edit Program
