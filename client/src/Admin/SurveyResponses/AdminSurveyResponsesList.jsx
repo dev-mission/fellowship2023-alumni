@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { DateTime } from 'luxon';
 
 import Api from '../../Api';
 import { useStaticContext } from '../../StaticContext';
@@ -44,7 +43,7 @@ function AdminSurveyResponsesList() {
             <tbody>
               {surveyResponses.map((surveyResponse) => (
                 <tr key={surveyResponse.id} onClick={() => navigate(`${surveyResponse.id}`)}>
-                  <td>{surveyResponse.User.firstName + ' ' +surveyResponse.User.lastName}</td>
+                  <td>{surveyResponse.User.firstName + ' ' + surveyResponse.User.lastName}</td>
                   <td>{surveyResponse.isJob && 'Yes'}</td>
                   <td>{surveyResponse.isVolunteer && 'Yes'}</td>
                   <td>{surveyResponse.isOther && 'Yes'}</td>
