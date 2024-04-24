@@ -1,0 +1,35 @@
+[
+  {
+    "model": "SurveyResponse",
+    "data": {
+      "id": 100,
+      "UserId": 1,
+      "isJob": true,
+      "isVolunteer": true,
+      "isOther": true,
+      "expiresOn": "2031-01-01T00:00:00.000Z"
+    }
+  },
+  {
+    "model": "SurveyResponse",
+    "data": {
+      "id": 101,
+      "UserId": 1,
+      "isJob": false,
+      "isVolunteer": false,
+      "isOther": false,
+      "expiresOn": "2041-01-01T00:00:00.000Z"
+    }
+  },
+  {
+    "model": "SurveyResponse",
+    "data": {
+      "id": 102,
+      "UserId": 2,
+      "isJob": true,
+      "isVolunteer": true,
+      "isOther": false,
+      "expiresOn": "2051-01-01T00:00:00.000Z"
+    }
+  }
+]

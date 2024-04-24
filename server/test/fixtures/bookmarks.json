@@ -1,0 +1,26 @@
+[
+  {
+    "model": "Bookmark",
+    "data": {
+      "id": 50,
+      "UserId": 1,
+      "PostId": 100
+    }
+  },
+  {
+    "model": "Bookmark",
+    "data": {
+      "id": 51,
+      "UserId": 1,
+      "PostId": 101
+    }
+  },
+  {
+    "model": "Bookmark",
+    "data": {
+      "id": 52,
+      "UserId": 2,
+      "PostId": 100
+    }
+  }
+]

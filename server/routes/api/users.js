@@ -9,7 +9,7 @@ import helpers from '../helpers.js';
 const router = express.Router();
 
 router.get('/', interceptors.requireAdmin, async (req, res) => {
-  const page = req.query.page || 1;
+  const page = req.query.page || '1';
   const { records, pages, total } = await models.User.paginate({
     page,
     order: [
@@ -36,7 +36,9 @@ router.get('/:id', interceptors.requireLogin, async (req, res) => {
     return;
   }
   try {
-    const user = await models.User.findByPk(req.params.id);
+    const user = await models.User.findByPk(req.params.id, {
+      include: models.Cohort,
+    });
     if (user) {
       res.json(user.toJSON());
     } else {
