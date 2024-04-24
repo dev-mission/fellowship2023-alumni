@@ -65,6 +65,9 @@ function Header() {
                       <Link className="dropdown-item" to="/admin/organizations" onClick={hideNavbar}>
                         Organizations
                       </Link>
+                      <Link className="dropdown-item" to="/admin/programs" onClick={hideNavbar}>
+                        Programs
+                      </Link>
                       <Link className="dropdown-item" to="/admin/cohorts" onClick={hideNavbar}>
                         Cohorts
                       </Link>
