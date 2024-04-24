@@ -98,6 +98,23 @@ const Api = {
       return instance.delete(`/api/invites/${id}`);
     },
   },
+  organizations: {
+    index() {
+      return instance.get(`/api/organizations`);
+    },
+    create(data) {
+      return instance.post('/api/organizations', data);
+    },
+    get(id) {
+      return instance.get(`/api/organizations/${id}`);
+    },
+    update(id, data) {
+      return instance.patch(`/api/organizations/${id}`, data);
+    },
+    delete(id) {
+      return instance.delete(`/api/organizations/${id}`);
+    },
+  },
   programs: {
     index() {
       return instance.get(`/api/programs`);
@@ -124,6 +141,23 @@ const Api = {
     },
     update(token, password) {
       return instance.patch(`/api/passwords/${token}`, { password });
+    },
+  },
+  tags: {
+    index() {
+      return instance.get(`/api/tags`);
+    },
+    create(data) {
+      return instance.post('/api/tags', data);
+    },
+    get(id) {
+      return instance.get(`/api/tags/${id}`);
+    },
+    update(id, data) {
+      return instance.patch(`/api/tags/${id}`, data);
+    },
+    delete(id) {
+      return instance.delete(`/api/tags/${id}`);
     },
   },
   users: {
