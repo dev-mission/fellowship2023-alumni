@@ -62,6 +62,9 @@ function Header() {
                 <>
                   {user.isAdmin && (
                     <NavDropdown title="Admin">
+                      <Link className="dropdown-item" to="/admin/surveyResponses" onClick={hideNavbar}>
+                        Survey Responses
+                      </Link>
                       <Link className="dropdown-item" to="/admin/tags" onClick={hideNavbar}>
                         Tags
                       </Link>

@@ -27,6 +27,7 @@ describe('/api/surveyresponses', () => {
         isJob: false,
         isVolunteer: false,
         isOther: true,
+        otherText: 'More info',
         expiresOn: '2061-01-01T00:00:00.000Z',
       })
       .expect(StatusCodes.CREATED);
@@ -37,6 +38,7 @@ describe('/api/surveyresponses', () => {
     assert.deepStrictEqual(record.isJob, false);
     assert.deepStrictEqual(record.isVolunteer, false);
     assert.deepStrictEqual(record.isOther, true);
+    assert.deepStrictEqual(record.otherText, 'More info');
     assert.deepStrictEqual(record.expiresOn, new Date('2061-01-01T00:00:00.000Z'));
   });
 
@@ -48,6 +50,7 @@ describe('/api/surveyresponses', () => {
         isJob: false,
         isVolunteer: true,
         isOther: true,
+        otherText: 'Updated info',
         expiresOn: '2071-01-01T00:00:00.000Z',
       })
       .expect(StatusCodes.OK);
@@ -56,6 +59,7 @@ describe('/api/surveyresponses', () => {
     assert.deepStrictEqual(record.isJob, false);
     assert.deepStrictEqual(record.isVolunteer, true);
     assert.deepStrictEqual(record.isOther, true);
+    assert.deepStrictEqual(record.otherText, 'Updated info');
     assert.deepStrictEqual(record.expiresOn, new Date('2071-01-01T00:00:00.000Z'));
   });
 
