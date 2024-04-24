@@ -40,7 +40,7 @@ function AdminTagsList() {
               {tags.map((tag) => (
                 <tr key={tag.id} onClick={() => navigate(`${tag.id}`)}>
                   <td>{tag.name}</td>
-                  <td>WIP</td>
+                  <td>{tag.postsCount}</td>
                 </tr>
               ))}
             </tbody>

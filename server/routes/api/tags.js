@@ -33,7 +33,7 @@ router.get('/', interceptors.requireLogin, async (req, res) => {
   const data = await Promise.all(
     records.map(async (r) => {
       const json = r.toJSON();
-      json.postsCount = await models.Post.count({ where: { TagId: r.id } });
+      json.postsCount = await r.countPosts();
       console.log(json);
       return json;
     }),
