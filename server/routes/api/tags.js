@@ -34,7 +34,6 @@ router.get('/', interceptors.requireLogin, async (req, res) => {
     records.map(async (r) => {
       const json = r.toJSON();
       json.postsCount = await r.countPosts();
-      console.log(json);
       return json;
     }),
   );

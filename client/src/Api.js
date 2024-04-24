@@ -159,6 +159,7 @@ const Api = {
     update(token, password) {
       return instance.patch(`/api/passwords/${token}`, { password });
     },
+  },
   users: {
     index(page = 1) {
       return instance.get(`/api/users`, { params: { page } });
