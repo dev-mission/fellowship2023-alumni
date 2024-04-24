@@ -30,7 +30,14 @@ router.delete('/:id', interceptors.requireAdmin, async (req, res) => {
 
 router.get('/', interceptors.requireLogin, async (req, res) => {
   const records = await models.Tag.findAll();
-  res.json(records.map((r) => r.toJSON()));
+  const data = await Promise.all(
+    records.map(async (r) => {
+      const json = r.toJSON();
+      json.postsCount = await r.countPosts();
+      return json;
+    }),
+  );
+  res.json(data);
 });
 
 router.patch('/:id', interceptors.requireAdmin, async (req, res) => {
