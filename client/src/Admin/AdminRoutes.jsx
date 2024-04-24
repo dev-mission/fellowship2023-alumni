@@ -5,7 +5,6 @@ import AdminUsersRoutes from './Users/AdminUsersRoutes';
 import AdminOrganizationsRoutes from './Organizations/AdminOrganizationsRoutes';
 import AdminProgramsRoutes from './Programs/AdminProgramsRoutes';
 
-
 function AdminRoutes() {
   return (
     <Routes>

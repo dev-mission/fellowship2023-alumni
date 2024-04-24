@@ -143,23 +143,6 @@ const Api = {
       return instance.patch(`/api/passwords/${token}`, { password });
     },
   },
-  programs: {
-    index() {
-      return instance.get(`/api/programs`);
-    },
-    create(data) {
-      return instance.post('/api/programs', data);
-    },
-    get(id) {
-      return instance.get(`/api/programs/${id}`);
-    },
-    update(id, data) {
-      return instance.patch(`/api/programs/${id}`, data);
-    },
-    delete(id) {
-      return instance.delete(`/api/programs/${id}`);
-    },
-  },
   tags: {
     index() {
       return instance.get(`/api/tags`);
