@@ -42,7 +42,7 @@ function AdminProgramsList() {
                 <tr key={program.id} onClick={() => navigate(`${program.id}`)}>
                   <td>{program.name}</td>
                   <td>{program.description}</td>
-                  <td>WIP</td>
+                  <td>{program.postsCount}</td>
                 </tr>
               ))}
             </tbody>
