@@ -115,6 +115,40 @@ const Api = {
       return instance.delete(`/api/tags/${id}`);
     },
   },
+  organizations: {
+    index() {
+      return instance.get(`/api/organizations`);
+    },
+    create(data) {
+      return instance.post('/api/organizations', data);
+    },
+    get(id) {
+      return instance.get(`/api/organizations/${id}`);
+    },
+    update(id, data) {
+      return instance.patch(`/api/organizations/${id}`, data);
+    },
+    delete(id) {
+      return instance.delete(`/api/organizations/${id}`);
+    },
+  },
+  programs: {
+    index() {
+      return instance.get(`/api/programs`);
+    },
+    create(data) {
+      return instance.post('/api/programs', data);
+    },
+    get(id) {
+      return instance.get(`/api/programs/${id}`);
+    },
+    update(id, data) {
+      return instance.patch(`/api/programs/${id}`, data);
+    },
+    delete(id) {
+      return instance.delete(`/api/programs/${id}`);
+    },
+  },
   passwords: {
     reset(email) {
       return instance.post('/api/passwords', { email });
@@ -125,7 +159,6 @@ const Api = {
     update(token, password) {
       return instance.patch(`/api/passwords/${token}`, { password });
     },
-  },
   users: {
     index(page = 1) {
       return instance.get(`/api/users`, { params: { page } });
