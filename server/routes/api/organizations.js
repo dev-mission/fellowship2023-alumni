@@ -33,8 +33,8 @@ router.get('/', interceptors.requireLogin, async (req, res) => {
   const data = await Promise.all(
     records.map(async (r) => {
       const json = r.toJSON();
-      json.postsCount = await models.Post.count({ where: { OrganizationId: r.id } });
-      json.programsCount = await models.Program.count({ where: { OrganizationId: r.id } });
+      json.postsCount = await r.countPosts();
+      json.programsCount = await r.countPrograms();
       return json;
     }),
   );
