@@ -98,6 +98,23 @@ const Api = {
       return instance.delete(`/api/invites/${id}`);
     },
   },
+  programs: {
+    index() {
+      return instance.get(`/api/programs`);
+    },
+    create(data) {
+      return instance.post('/api/programs', data);
+    },
+    get(id) {
+      return instance.get(`/api/programs/${id}`);
+    },
+    update(id, data) {
+      return instance.patch(`/api/programs/${id}`, data);
+    },
+    delete(id) {
+      return instance.delete(`/api/programs/${id}`);
+    },
+  },
   passwords: {
     reset(email) {
       return instance.post('/api/passwords', { email });
