@@ -17,8 +17,12 @@ function OpportunityList() {
         <Card.Body>
           <Container>
             <div className="row">
-              <div className="col-md-6"><h1>Opportunities</h1></div>
-              <div className="col-md-4 .col-md-offset-4"><Button variant="outline-primary">New Opp</Button></div>
+              <div className="col-md-6">
+                <h1>Opportunities</h1>
+              </div>
+              <div className="col-md-4 .col-md-offset-4">
+                <Button variant="outline-primary">New Opp</Button>
+              </div>
             </div>
           </Container>
           <DropdownButton title="Recently Added" id="bg-nested-dropdown">
@@ -28,17 +32,21 @@ function OpportunityList() {
           </DropdownButton>
           <Container>
             <Row>
-              <Col><Button variant="outline-primary">Add Filter</Button></Col>
-              <Col><Form.Control type="text" placeholder="Search" /></Col>
+              <Col>
+                <Button variant="outline-primary">Add Filter</Button>
+              </Col>
+              <Col>
+                <Form.Control type="text" placeholder="Search" />
+              </Col>
             </Row>
           </Container>
         </Card.Body>
       </Card>
-        <Container>
-            <div className="col-md-4 col-md-offset-5">
-              <h3>CLEAR FILTERS</h3>
-            </div>
-        </Container>
+      <Container>
+        <div className="col-md-4 col-md-offset-5">
+          <h3>CLEAR FILTERS</h3>
+        </div>
+      </Container>
     </>
   );
 }
