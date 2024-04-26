@@ -1,4 +1,4 @@
-import HelpSurvey from "../HelpSurvey/HelpSurvey";
+import HelpSurvey from '../HelpSurvey/HelpSurvey';
 
 function OpportunityList() {
   return (
@@ -6,7 +6,6 @@ function OpportunityList() {
       <h1>Opportunities</h1>
       <HelpSurvey></HelpSurvey>
     </>
-  
   );
 }
 

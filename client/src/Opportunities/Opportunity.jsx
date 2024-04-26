@@ -1,8 +1,11 @@
-
+import HelpSurvey from '../HelpSurvey/HelpSurvey';
 function Opportunity() {
-    return (
+  return (
+    <>
       <h1>Single Opportunity</h1>
-    );
-  }
-  
-  export default Opportunity;
+      <HelpSurvey></HelpSurvey>
+    </>
+  );
+}
+
+export default Opportunity;
