@@ -1,8 +1,14 @@
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { DateTime } from 'luxon';
+import "bootstrap-icons/font/bootstrap-icons.css";
 
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import Dropdown from 'react-bootstrap/Dropdown';
+import Api from '../Api';
+import { useStaticContext } from '../StaticContext';
+
 
 import Form from 'react-bootstrap/Form';
 
@@ -13,45 +19,57 @@ import Col from 'react-bootstrap/Col';
 import Badge from 'react-bootstrap/Badge';
 
 function OpportunityList() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const staticContext = useStaticContext();
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    Api.posts.index().then((response) => setPosts(response.data));
+  }, []);
+
   return (
     <>
-        <Card.Body>
-          {/* <Container>
-            <div className="row">
-              <div className="col-md-6"><h1>Opportunities</h1></div>
-              <div className="col-md-4 .col-md-offset-4"><Button variant="outline-primary">New Opp</Button></div>
+      <Helmet>
+        <title>Opportunities - {staticContext?.env?.VITE_SITE_TITLE ?? ''}</title>
+      </Helmet>
+      <div className="posts container">
+      <Container>
+          <div className="row">
+            <div className="col-md-6">
+              <h1>Opportunities</h1>
             </div>
-          </Container> */}
-          <Container>
-            <div className="row">
-              <div className="col-md-6"><h1>Opportunities</h1></div>
-              <div className="col-md-6 col-md-offset-4"><Button className="col-md-12" variant="outline-primary">New Opp</Button></div>
+            <div className="col-md-6 col-md-offset-4">
+              <Link to="new">
+                <Button className="col-md-12" variant="outline-primary">
+                  New Opp
+                </Button>
+              </Link>
             </div>
-          </Container>
-          <Container>
-            <div className="row">
-              <div className="d-flex">
-                {/* <DropdownButton className="w-100" title="Recently Added" id="bg-nested-dropdown">
-              <Dropdown.Item eventKey="1">Most popular</Dropdown.Item>
-              <Dropdown.Item eventKey="2">Newest</Dropdown.Item>
-              <Dropdown.Item eventKey="2">Oldest</Dropdown.Item>
-            </DropdownButton> */}
-                <Form.Select aria-label="Default select example">
-                  <option>Recently Added</option>
-                  <option value="1">Most popular</option>
-                  <option value="2">Newest</option>
-                  <option value="3">Oldest</option>
-                </Form.Select>
-              </div>
+          </div>
+        </Container>
+        <Container>
+          <div className="row">
+            <div className="d-flex">
+              <Form.Select aria-label="Default select example">
+                <option>Recently Added</option>
+                <option value="1">Most popular</option>
+                <option value="2">Newest</option>
+                <option value="3">Oldest</option>
+              </Form.Select>
             </div>
-          </Container>
-          <Container>
-            <Row>
-              <Col><Button variant="outline-primary">Add Filter</Button></Col>
-              <Col><Form.Control type="text" placeholder="Search" /></Col>
-            </Row>
-          </Container>
-        </Card.Body>
+          </div>
+        </Container>
+        <Container>
+          <Row>
+            <Col>
+              <Button variant="outline-primary">Add Filter</Button>
+            </Col>
+            <Col>
+              <Form.Control type="text" placeholder="Search" />
+            </Col>
+          </Row>
+        </Container>
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-3 offset-9">
@@ -60,43 +78,32 @@ function OpportunityList() {
         </div>
       </div>
       <Container>
-        <div className="card">
-          <h5 className="card-header d-flex justify-content-between">Uber
+        {posts.map((post) => (
+        <div key={post.id} onClick={() => navigate(`${post.id}`)} className="card mb-3">
+          <h5 className="card-header d-flex justify-content-between">
+          <div>
+            <i className="bi bi-pencil-square"></i>
+            <i className="bi bi-trash"></i>
+            {post.OrganizationId && post.Organization.name}
+          </div>
+          <div>
             <Badge pill bg="primary">
               Jobs
             </Badge>
+          </div>
           </h5>
           <div className="card-body">
-            <h5 className="card-title">Software Engineer</h5>
-            <p className="card-text">San Francisco, CA</p>
-            <p className="card-text">Posted 6 days ago</p>
+            <h5 className="card-title">{post.title}</h5>
+            <p className="card-text">{post.location}</p>
+            <p className="card-text">{new Date(post.postedOn).toLocaleDateString()}</p>
           </div>
         </div>
-          <div className="card">
-            <h5 className="card-header d-flex justify-content-between">Uber
-              <Badge pill bg="primary">
-                Jobs
-              </Badge>
-            </h5>
-            <div className="card-body">
-              <h5 className="card-title">Software Engineer</h5>
-              <p className="card-text">San Francisco, CA</p>
-              <p className="card-text">Posted 6 days ago</p>
-            </div>
-          </div>
-          <div className="card">
-            <h5 className="card-header d-flex justify-content-between">Uber
-              <Badge pill bg="primary">
-                Jobs
-              </Badge>
-            </h5>
-            <div className="card-body">
-              <h5 className="card-title">Software Engineer</h5>
-              <p className="card-text">San Francisco, CA</p>
-              <p className="card-text">Posted 6 days ago</p>
-            </div>
-          </div>
+      ))}
+
+      
       </Container>
+      </div>
+        
     </>
   );
 }

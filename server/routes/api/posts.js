@@ -26,7 +26,6 @@ router.post('/', interceptors.requireAdmin, async (req, res) => {
     ]);
     data.UserId = req.user.id;
     const record = await models.Post.create(data);
-
     res.status(StatusCodes.CREATED).json(record.toJSON());
   } catch (error) {
     console.log(error);
@@ -53,8 +52,10 @@ router.delete('/:id', interceptors.requireAdmin, async (req, res) => {
 });
 
 router.get('/', interceptors.requireLogin, async (req, res) => {
-  const records = await models.Post.findAll();
-  res.json(records.map((r) => r.toJSON()));
+  const records = await models.Post.findAll( {include: models.Organization}, {include: models.Tags} );
+  const data = records.map((r) => r.toJSON());
+  console.log(data);
+  res.json(data);
 });
 
 router.patch('/:id', interceptors.requireAdmin, async (req, res) => {
@@ -94,7 +95,7 @@ router.patch('/:id', interceptors.requireAdmin, async (req, res) => {
 
 router.get('/:id', interceptors.requireLogin, async (req, res) => {
   try {
-    const record = await models.Post.findByPk(req.params.id);
+    const record = await models.Post.findByPk(req.params.id, {include: models.Organization}, {include: models.Tags});
     res.json(record.toJSON());
   } catch (err) {
     console.log(err);
