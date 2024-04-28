@@ -1,14 +1,11 @@
-import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { DateTime } from 'luxon';
-import "bootstrap-icons/font/bootstrap-icons.css";
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import Api from '../Api';
 import { useStaticContext } from '../StaticContext';
-
 
 import Form from 'react-bootstrap/Form';
 
@@ -19,7 +16,6 @@ import Col from 'react-bootstrap/Col';
 import Badge from 'react-bootstrap/Badge';
 
 function OpportunityList() {
-  const location = useLocation();
   const navigate = useNavigate();
   const staticContext = useStaticContext();
   const [posts, setPosts] = useState([]);
@@ -34,7 +30,7 @@ function OpportunityList() {
         <title>Opportunities - {staticContext?.env?.VITE_SITE_TITLE ?? ''}</title>
       </Helmet>
       <div className="posts container">
-      <Container>
+        <Container>
           <div className="row">
             <div className="col-md-6">
               <h1>Opportunities</h1>
@@ -70,40 +66,37 @@ function OpportunityList() {
             </Col>
           </Row>
         </Container>
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-sm-3 offset-9">
-            <h6>CLEAR FILTERS</h6>
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-sm-3 offset-9">
+              <h6>CLEAR FILTERS</h6>
+            </div>
           </div>
         </div>
+        <Container>
+          {posts.map((post) => (
+            <div key={post.id} onClick={() => navigate(`${post.id}`)} className="card mb-3">
+              <h5 className="card-header d-flex justify-content-between">
+                <div>
+                  <i className="bi bi-pencil-square"></i>
+                  <i className="bi bi-trash"></i>
+                  {post.OrganizationId && post.Organization.name}
+                </div>
+                <div>
+                  <Badge pill bg="primary">
+                    Jobs
+                  </Badge>
+                </div>
+              </h5>
+              <div className="card-body">
+                <h5 className="card-title">{post.title}</h5>
+                <p className="card-text">{post.location}</p>
+                <p className="card-text">{new Date(post.postedOn).toLocaleDateString()}</p>
+              </div>
+            </div>
+          ))}
+        </Container>
       </div>
-      <Container>
-        {posts.map((post) => (
-        <div key={post.id} onClick={() => navigate(`${post.id}`)} className="card mb-3">
-          <h5 className="card-header d-flex justify-content-between">
-          <div>
-            <i className="bi bi-pencil-square"></i>
-            <i className="bi bi-trash"></i>
-            {post.OrganizationId && post.Organization.name}
-          </div>
-          <div>
-            <Badge pill bg="primary">
-              Jobs
-            </Badge>
-          </div>
-          </h5>
-          <div className="card-body">
-            <h5 className="card-title">{post.title}</h5>
-            <p className="card-text">{post.location}</p>
-            <p className="card-text">{new Date(post.postedOn).toLocaleDateString()}</p>
-          </div>
-        </div>
-      ))}
-
-      
-      </Container>
-      </div>
-        
     </>
   );
 }

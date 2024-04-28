@@ -52,9 +52,9 @@ function AdminPostForm() {
   }
 
   function onChangeCheckBox(event) {
-    const newTag = { ...tag };
-    newTags[event.target.name] = event.target.checked;
-    setTags(newTag);
+    const newPost = { ...post };
+    newPost[event.target.name] = event.target.checked;
+    setPost(newPost);
   }
 
   async function onSubmit(event) {
@@ -205,7 +205,7 @@ function AdminPostForm() {
                     </label>
                     {error?.errorMessagesHTMLFor?.('other')}
                   </div>
-                  <hr/>
+                  <hr />
                   <div className="mb-3">
                     <label className="form-label" htmlFor="OrganizationId">
                       Organization
@@ -215,10 +215,11 @@ function AdminPostForm() {
                       name="OrganizationId"
                       className="form-select"
                       onChange={onChange}
-                      value={post.OrganizationId}
-                    >
+                      value={post.OrganizationId}>
                       {organizations.map((organization) => (
-                        <option key={organization.id} value={organization.id}>{organization.name}</option>
+                        <option key={organization.id} value={organization.id}>
+                          {organization.name}
+                        </option>
                       ))}
                     </select>
                     {error?.errorMessagesHTMLFor?.('OrganizationId')}
@@ -266,25 +267,26 @@ function AdminPostForm() {
                     {error?.errorMessagesHTMLFor?.('applicationUrl')}
                   </div>
                   <h6 className="mb-3 card-title">Tags (Optional)</h6>
-                    {tags.map((tag) => (<>
+                  {tags.map((tag) => (
+                    <>
                       <div className="mb-3 form-group form-check">
-                      <input
-                      type="checkbox"
-                      className={classNames('form-check-input', { 'is-invalid': error?.errorsFor?.(tag.name) })}
-                      id={tag.id}
-                      name={tag.name}
-                      onChange={onChangeCheckBox}
-                      value={tag.name}
-                      // checked={tag.name && post. == tag.name}
-                    />
-                    <label className="form-check-label" htmlFor="isJob">
-                      {tag.name}
-                    </label>
-                      {error?.errorMessagesHTMLFor?.(tag.name)}
+                        <input
+                          type="checkbox"
+                          className={classNames('form-check-input', { 'is-invalid': error?.errorsFor?.(tag.name) })}
+                          id={tag.id}
+                          name={tag.name}
+                          onChange={onChangeCheckBox}
+                          value={tag.name}
+                          // checked={tag.name && post. == tag.name}
+                        />
+                        <label className="form-check-label" htmlFor="isJob">
+                          {tag.name}
+                        </label>
+                        {error?.errorMessagesHTMLFor?.(tag.name)}
                       </div>
-                      </>
-                      ))}
-                   <div className="mb-3">
+                    </>
+                  ))}
+                  <div className="mb-3">
                     <label className="form-label" htmlFor="experience">
                       Experience Level (Optional)
                     </label>

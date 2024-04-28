@@ -52,9 +52,9 @@ router.delete('/:id', interceptors.requireAdmin, async (req, res) => {
 });
 
 router.get('/', interceptors.requireLogin, async (req, res) => {
-  const records = await models.Post.findAll( {include: models.Organization}, {include: models.Tags} );
+  const records = await models.Post.findAll({ include: models.Organization }, { include: models.Tags });
   const data = records.map((r) => r.toJSON());
-  console.log(data);
+  // console.log(data);
   res.json(data);
 });
 
@@ -95,7 +95,7 @@ router.patch('/:id', interceptors.requireAdmin, async (req, res) => {
 
 router.get('/:id', interceptors.requireLogin, async (req, res) => {
   try {
-    const record = await models.Post.findByPk(req.params.id, {include: models.Organization}, {include: models.Tags});
+    const record = await models.Post.findByPk(req.params.id, { include: models.Organization }, { include: models.Tags });
     res.json(record.toJSON());
   } catch (err) {
     console.log(err);
