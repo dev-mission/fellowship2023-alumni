@@ -23,6 +23,7 @@ function AdminPostForm() {
     description: 'Description',
     applicationUrl: 'https://devmission.org/',
     OrganizationId: 2,
+    tagIds: [],
   });
   const [error, setError] = useState(null);
 
@@ -39,8 +40,9 @@ function AdminPostForm() {
 
   useEffect(() => {
     if (postId) {
-      Api.posts.get(postId).then((response) => {
-        setPost(response.data);
+      Api.posts.get(postId).then(async (response) => {
+        const tagIds = await Promise.all(response.data.Tags.map(async (tag) => tag.id));
+        setPost({ ...response.data, tagIds: tagIds });
       });
     }
   }, [postId]);
@@ -52,9 +54,21 @@ function AdminPostForm() {
   }
 
   function onChangeCheckBox(event) {
-    const newPost = { ...post };
-    newPost[event.target.name] = event.target.checked;
-    setPost(newPost);
+    const tagId = parseInt(event.target.value);
+    const isChecked = event.target.checked;
+
+    let updatedTagIds;
+
+    if (isChecked) {
+      // If the checkbox is checked, add the tag ID to the array
+      updatedTagIds = [...post.tagIds, tagId];
+    } else {
+      // If the checkbox is unchecked, remove the tag ID from the array
+      updatedTagIds = post.tagIds.filter((id) => id !== tagId);
+    }
+
+    // Update the post object with the updated tagIds array
+    setPost({ ...post, tagIds: updatedTagIds });
   }
 
   async function onSubmit(event) {
@@ -272,12 +286,12 @@ function AdminPostForm() {
                       <div className="mb-3 form-group form-check">
                         <input
                           type="checkbox"
-                          className={classNames('form-check-input', { 'is-invalid': error?.errorsFor?.(tag.name) })}
+                          className={classNames('form-check-input', { 'is-invalid': error?.errorsFor?.('tagIds') })}
                           id={tag.id}
-                          name={tag.name}
+                          name="tagIds"
                           onChange={onChangeCheckBox}
-                          value={tag.name}
-                          // checked={tag.name && post. == tag.name}
+                          value={tag.id}
+                          checked={post.tagIds?.includes(tag.id)}
                         />
                         <label className="form-check-label" htmlFor="isJob">
                           {tag.name}
