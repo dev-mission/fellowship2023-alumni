@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import { DateTime } from 'luxon';
 
 import Api from '../Api';
 import { useStaticContext } from '../StaticContext';
@@ -23,6 +24,20 @@ function OpportunityList() {
   useEffect(() => {
     Api.posts.index().then((response) => setPosts(response.data));
   }, []);
+
+  async function onDelete(event, postId) {
+    event.stopPropagation();
+    if (window.confirm(`Are you sure you wish to delete this post?`)) {
+      const response = await Api.posts.delete(postId);
+      if (response.status === 200) {
+        const updatedPosts = posts.filter((post) => post.id !== postId);
+        setPosts(updatedPosts);
+        navigate('/opportunities', { state: { flash: 'Post deleted!' } });
+      } else {
+        window.alert('An unexpected error has occurred.');
+      }
+    }
+  }
 
   return (
     <>
@@ -78,20 +93,26 @@ function OpportunityList() {
             <div key={post.id} onClick={() => navigate(`${post.id}`)} className="card mb-3">
               <h5 className="card-header d-flex justify-content-between">
                 <div>
-                  <i className="bi bi-pencil-square"></i>
-                  <i className="bi bi-trash"></i>
+                  <Link to="edit">
+                    <i className="bi bi-pencil-square"></i>
+                  </Link>
+                  <button className="border-0" onClick={(event) => onDelete(event, post.id)}>
+                    <i className="bi bi-trash"></i>
+                  </button>
                   {post.OrganizationId && post.Organization.name}
                 </div>
                 <div>
-                  <Badge pill bg="primary">
-                    Jobs
-                  </Badge>
+                  {post.Tags.map((tag) => (
+                    <Badge key={tag.id} pill bg="primary">
+                      {tag.name}
+                    </Badge>
+                  ))}
                 </div>
               </h5>
               <div className="card-body">
                 <h5 className="card-title">{post.title}</h5>
                 <p className="card-text">{post.location}</p>
-                <p className="card-text">{new Date(post.postedOn).toLocaleDateString()}</p>
+                <p className="card-text">{new DateTime(post.createdAt).diffNow('days').toFormat('d') + ' days ago'}</p>
               </div>
             </div>
           ))}

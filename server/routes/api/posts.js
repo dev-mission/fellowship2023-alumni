@@ -24,10 +24,12 @@ router.post('/', interceptors.requireAdmin, async (req, res) => {
       'OrganizationId',
       'ProgramId',
     ]);
-    const tagIds = _.pick(req.body, ['tagIds']).tagIds;
     data.UserId = req.user.id;
     const record = await models.Post.create(data);
-    await record.setTags(tagIds);
+    const tagIds = _.pick(req.body, ['tagIds']).tagIds;
+    if (tagIds) {
+      await record.setTags(tagIds);
+    }
     res.status(StatusCodes.CREATED).json(record.toJSON());
   } catch (error) {
     console.log(error);
@@ -45,6 +47,7 @@ router.post('/', interceptors.requireAdmin, async (req, res) => {
 router.delete('/:id', interceptors.requireAdmin, async (req, res) => {
   try {
     const record = await models.Post.findByPk(req.params.id);
+    await record.setTags([]);
     await record.destroy();
     res.status(StatusCodes.OK).end();
   } catch (error) {
@@ -81,6 +84,10 @@ router.patch('/:id', interceptors.requireAdmin, async (req, res) => {
         'ProgramId',
       ]),
     );
+    const tagIds = _.pick(req.body, ['tagIds']).tagIds;
+    if (tagIds) {
+      await record.setTags(tagIds);
+    }
     res.json(record.toJSON());
   } catch (error) {
     console.log(error);

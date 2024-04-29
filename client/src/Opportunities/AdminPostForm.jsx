@@ -3,7 +3,6 @@ import { Helmet } from 'react-helmet-async';
 import { useNavigate, useParams } from 'react-router-dom';
 import classNames from 'classnames';
 import { StatusCodes } from 'http-status-codes';
-import { DateTime } from 'luxon';
 
 import Api from '../Api';
 import { useStaticContext } from '../StaticContext';
@@ -75,7 +74,6 @@ function AdminPostForm() {
     event.preventDefault();
     setError(null);
     try {
-      post.postedOn = DateTime.fromISO(post.postedOn, { zone: 'local' }).toISO();
       if (postId) {
         await Api.posts.update(postId, post);
         navigate(`/opportunities/${postId}`);
