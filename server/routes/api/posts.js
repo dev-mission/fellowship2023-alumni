@@ -94,15 +94,22 @@ router.patch('/:id', interceptors.requireAdmin, async (req, res) => {
         'responsibilities',
       ]),
     );
+    
+    const data = record.toJSON();
     const tagIds = _.pick(req.body, ['tagIds']).tagIds;
-    const userIds = _.pick(req.body, ['userIds']).userIds;
     if (tagIds) {
       await record.setTags(tagIds);
     }
-    if (userIds) {
-      await record.setUsers(userIds);
+
+    if (_.pick(req.body, ['isBookmarked'])?.isBookmarked) {
+      await record.addUser(req.user.id);
+    } else {
+      await record.removeUser(req.user.id);
     }
-    res.json(record.toJSON());
+    const users = await record.getUsers();
+    data.userIds = users.map((user) => user.id);
+    data.usersCount = await record.countUsers();
+    res.json(data);
   } catch (error) {
     console.log(error);
     if (error.name === 'SequelizeValidationError') {
@@ -120,6 +127,7 @@ router.get('/:id', interceptors.requireLogin, async (req, res) => {
   try {
     const record = await models.Post.findByPk(req.params.id, { include: [models.Organization, models.Tag] });
     const data = record.toJSON();
+
     const users = await record.getUsers();
     data.userIds = users.map((user) => user.id);
     data.usersCount = await record.countUsers();

@@ -6,41 +6,54 @@ import { DateTime } from 'luxon';
 
 import Api from '../Api';
 import { useStaticContext } from '../StaticContext';
+import { useAuthContext } from '../AuthContext';
 
 function Opportunity() {
   const staticContext = useStaticContext();
   const navigate = useNavigate();
-  const { postId } = useParams();
+  const [post, setPost] = useState({
+    title: 'Job Title',
+    workLocation: 'San Francisco, CA',
+    description: 'Description',
+    applicationUrl: 'https://devmission.org/',
+    OrganizationId: 2,
+    Organization: {name: 'Organization Name'},
+    notes: '',
+    responsibilities: '',
+    tagIds: [],
+    userIds: [],
+    createdAt: new Date('2033-01-01T00:00:00.000Z'),
+    isBookmarked: false,
+  });
 
-  const [post, setPost] = useState();
-  // const [users, setUsers] = useState([]);
+  const { postId } = useParams();
+  const { user } = useAuthContext();
 
   useEffect(() => {
     if (postId) {
       Api.posts.get(postId).then(async (response) => {
         const tagIds = await Promise.all(response.data.Tags.map(async (tag) => tag.id));
-        setPost({ ...response.data, tagIds: tagIds });
+        const isBookmarked = response.data.userIds?.includes(user.id);
+        console.log(isBookmarked);
+        setPost({ ...response.data, tagIds: tagIds, isBookmarked: isBookmarked });
       });
     }
   }, [postId]);
 
-  // function onChangeCheckBox(event) {
-  //   const userId = parseInt(event.target.value);
-  //   const isChecked = event.target.checked;
-
-  //   let updatedUserIds;
-
-  //   if (isChecked) {
-  //     // If the checkbox is checked, add the tag ID to the array
-  //     updatedUserIds = [...post.userIds, userId];
-  //   } else {
-  //     // If the checkbox is unchecked, remove the tag ID from the array
-  //     updatedUserIds = post.userIds.filter((id) => id !== userId);
-  //   }
-
-  //   // Update the post object with the updated tagIds array
-  //   setPost({ ...post, userIds: updatedUserIds });
-  // }
+  async function onChangeCheckBox(event) {
+    const isChecked = event.target.checked;
+    console.log(isChecked);
+    console.log(post);
+    const response = await Api.posts.update(postId, { isBookmarked: isChecked });
+    if (response.status === 200) {
+      console.log(response);
+      setPost(prevPost => ({ ...prevPost, isBookmarked: isChecked }));
+    } else {
+      console.error('Failed to update isBookmarked status.');
+    }
+    
+    
+  }
 
   async function onDelete() {
     if (window.confirm(`Are you sure you wish to delete this Post?`)) {
@@ -81,21 +94,17 @@ function Opportunity() {
               <br></br>
               <div className="d-flex flex-row align-items-center">
                 <i className="bi bi-bookmark" style={{ fontSize: '2rem' }}></i>
-                {/* <div className="mb-3 form-group form-check">
-                        <input
-                          type="checkbox"
-                          className= "form-check-input"
-                          id="bookmark"
-                          name="bookmark"
-                          onChange={onChangeCheckBox}
-                          value={tag.id}
-                          checked={post.Users?.includes(user.id)}
-                        />
-                        <label className="form-check-label" htmlFor="isJob">
-                          {tag.name}
-                        </label>
-                        {error?.errorMessagesHTMLFor?.(tag.name)}
-                      </div> */}
+                <div className="mb-3 form-group form-check">
+                    <input
+                      type="checkbox"
+                      className= "form-check-input"
+                      id={user.id}
+                      name="isBookmarked"
+                      value={user.id}
+                      onChange={onChangeCheckBox}
+                      checked={post.isBookmarked}
+                    />
+                  </div>
                 <div className="d-flex flex-column ms-2">
                   <p className="mb-0">Save this opportunity</p>
                   <p className="mb-0">{post.usersCount > 0 && post.usersCount + ' other people have saved this already!'}</p>
