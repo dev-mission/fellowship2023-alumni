@@ -30,6 +30,8 @@ export default function (sequelize, DataTypes) {
       isRecurring: DataTypes.BOOLEAN,
       isArchived: DataTypes.BOOLEAN,
       workLocation: DataTypes.STRING,
+      notes: DataTypes.STRING,
+      responsibilities: DataTypes.STRING,
     },
     {
       sequelize,

@@ -331,7 +331,7 @@ function AdminPostForm() {
                   </div>
                   <div className="mb-3">
                     <label className="form-label" htmlFor="responsibilities">
-                      Responsibilites (Optional)
+                      Responsibilities (Optional)
                     </label>
                     <textarea
                       className={classNames('form-control', { 'is-invalid': error?.errorsFor?.('responsibilities') })}
@@ -356,17 +356,17 @@ function AdminPostForm() {
                     {error?.errorMessagesHTMLFor?.('qualifications')}
                   </div>
                   <div className="mb-3">
-                    <label className="form-label" htmlFor="otherText">
-                      Other Details
+                    <label className="form-label" htmlFor="notes">
+                      Notes
                     </label>
                     <textarea
-                      className={classNames('form-control', { 'is-invalid': error?.errorsFor?.('otherText') })}
-                      id="otherText"
-                      name="otherText"
+                      className={classNames('form-control', { 'is-invalid': error?.errorsFor?.('notes') })}
+                      id="notes"
+                      name="notes"
                       onChange={onChange}
                       // value={post.otherText}
                     />
-                    {error?.errorMessagesHTMLFor?.('otherText')}
+                    {error?.errorMessagesHTMLFor?.('notes')}
                   </div>
                   <div className="mb-3 d-grid">
                     <button className="btn btn-primary" type="submit">

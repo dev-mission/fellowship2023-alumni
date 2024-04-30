@@ -60,6 +60,12 @@ module.exports = {
       workLocation: {
         type: Sequelize.STRING,
       },
+      notes: {
+        type: Sequelize.STRING,
+      },
+      responsibilities: {
+        type: Sequelize.STRING,
+      },
       ProgramId: {
         type: Sequelize.INTEGER,
         references: {

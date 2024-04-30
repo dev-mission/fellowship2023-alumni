@@ -39,21 +39,20 @@ function Opportunity() {
       <main className="container">
         {post && (
           <>
-            <h1>Heading</h1>
-            <div className="mb-3">
-              <Link className="btn btn-outline-primary me-2" to="edit">
-                Edit Post
-              </Link>
-              <button className="btn btn-outline-danger" onClick={onDelete}>
-                Delete Post
-              </button>
-            </div>
             <Container>
               <h1>Software Engineer</h1>
               <h3>Uber</h3>
               <p className="mb-0">San Francisco, CA</p>
               <p className="mb-0">Posted 6 days ago</p>
               <br></br>
+              <div className="mb-3">
+                <Link className="btn btn-outline-primary me-2" to="edit">
+                  Edit Post
+                </Link>
+                <button className="btn btn-outline-danger" onClick={onDelete}>
+                  Delete Post
+                </button>
+              </div>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="30"
