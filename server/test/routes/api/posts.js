@@ -10,7 +10,7 @@ describe('/api/posts', () => {
   let testSession;
 
   beforeEach(async () => {
-    await helper.loadFixtures(['users', 'organizations', 'programs', 'posts']);
+    await helper.loadFixtures(['users', 'organizations', 'programs', 'posts', 'tags']);
     testSession = session(app);
     await testSession
       .post('/api/auth/login')
@@ -37,10 +37,11 @@ describe('/api/posts', () => {
         // UserId: 1, (admin.user@test.com is UserId: 1)
         OrganizationId: 10002,
         ProgramId: 1000,
+        tagIds: [10000],
       })
       .expect(StatusCodes.CREATED);
 
-    const record = await models.Post.findByPk(response.body.id);
+    const record = await models.Post.findByPk(response.body.id, { include: models.Tag });
     assert.notDeepStrictEqual(record.id, null);
     assert.deepStrictEqual(record.postedOn, new Date('2023-01-01T00:00:00.000Z'));
     assert.deepStrictEqual(record.expiresOn, new Date('2033-01-01T00:00:00.000Z'));
@@ -56,6 +57,7 @@ describe('/api/posts', () => {
     assert.deepStrictEqual(record.UserId, 1);
     assert.deepStrictEqual(record.OrganizationId, 10002);
     assert.deepStrictEqual(record.ProgramId, 1000);
+    assert.deepStrictEqual(record.Tags[0].id, 10000);
   });
 
   it('updates an existing Post', async () => {
@@ -76,9 +78,10 @@ describe('/api/posts', () => {
         // UserId: 1, (admin.user@test.com is UserId: 1)
         OrganizationId: 10002,
         ProgramId: 1000,
+        tagIds: [10000],
       })
       .expect(StatusCodes.OK);
-    const record = await models.Post.findByPk(100);
+    const record = await models.Post.findByPk(100, { include: models.Tag });
     assert.deepStrictEqual(record.postedOn, new Date('2023-03-03T00:00:00.000Z'));
     assert.deepStrictEqual(record.expiresOn, new Date('2033-03-03T00:00:00.000Z'));
     assert.deepStrictEqual(record.title, 'Updated Title');
@@ -93,6 +96,7 @@ describe('/api/posts', () => {
     assert.deepStrictEqual(record.UserId, 1);
     assert.deepStrictEqual(record.OrganizationId, 10002);
     assert.deepStrictEqual(record.ProgramId, 1000);
+    assert.deepStrictEqual(record.Tags[0].id, 10000);
   });
 
   it('deletes an existing Post', async () => {

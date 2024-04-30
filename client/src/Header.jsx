@@ -57,6 +57,11 @@ function Header() {
                 Home
               </Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link" aria-current="page" to="/opportunities" onClick={hideNavbar}>
+                Opportunities
+              </Link>
+            </li>
             <ul className="navbar-nav flex-grow-1 d-flex justify-content-end">
               {user && (
                 <>

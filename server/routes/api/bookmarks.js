@@ -11,7 +11,6 @@ router.post('/', interceptors.requireLogin, async (req, res) => {
   try {
     const data = _.pick(req.body, ['PostId']);
     data.UserId = req.user.id;
-
     const record = await models.Bookmark.create(data);
     res.status(StatusCodes.CREATED).json(record.toJSON());
   } catch (error) {

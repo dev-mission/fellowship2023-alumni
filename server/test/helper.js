@@ -53,8 +53,8 @@ async function resetDatabase() {
   // clear all test data (order matters due to foreign key relationships)
   // Ex. Programs should be before Organization since each Program needs an Organization Id
   await models.sequelize.query(`
-    DELETE FROM "PostTags";
     DELETE FROM "Bookmarks";
+    DELETE FROM "PostTags";
     DELETE FROM "Posts";
     DELETE FROM "Invites";
     DELETE FROM "SurveyResponses";

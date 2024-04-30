@@ -98,6 +98,23 @@ const Api = {
       return instance.delete(`/api/invites/${id}`);
     },
   },
+  posts: {
+    index() {
+      return instance.get(`/api/posts`);
+    },
+    create(data) {
+      return instance.post('/api/posts', data);
+    },
+    get(id) {
+      return instance.get(`/api/posts/${id}`);
+    },
+    update(id, data) {
+      return instance.patch(`/api/posts/${id}`, data);
+    },
+    delete(id) {
+      return instance.delete(`/api/posts/${id}`);
+    },
+  },
   surveyResponses: {
     index() {
       return instance.get(`/api/surveyResponses`);
