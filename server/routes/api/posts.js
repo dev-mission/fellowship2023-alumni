@@ -58,7 +58,13 @@ router.delete('/:id', interceptors.requireAdmin, async (req, res) => {
 
 router.get('/', interceptors.requireLogin, async (req, res) => {
   const records = await models.Post.findAll({ include: [models.Organization, models.Tag] });
-  const data = records.map((r) => r.toJSON());
+  const data = await Promise.all(
+    records.map(async (r) => {
+      const json = r.toJSON();
+      json.bookmarksCount = await r.countBookmarks();
+      return json;
+    }),
+  );
   // console.log(data);
   res.json(data);
 });
