@@ -33,6 +33,10 @@ module.exports = {
         type: Sequelize.DATE,
       },
     });
+    await queryInterface.addIndex('Cohorts', {
+      fields: ['cohortNumber'],
+      unique: true,
+    });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable('Cohorts');
