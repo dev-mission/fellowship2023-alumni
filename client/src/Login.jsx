@@ -92,7 +92,7 @@ function Login() {
                     {staticContext?.env?.VITE_FEATURE_REGISTRATION === 'true' && (
                       <>
                         <br />
-                        <Link to="/register">Need an account?</Link>
+                        {/* <Link to="/register">Need an account?</Link> */}
                       </>
                     )}
                   </div>

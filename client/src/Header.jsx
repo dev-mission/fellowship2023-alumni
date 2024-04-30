@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import classNames from 'classnames';
+import photo from '../public/photos/devMissionLogo.png'
 
 import './Header.scss';
 import Api from './Api';
@@ -44,8 +45,8 @@ function Header() {
   return (
     <nav className="header navbar navbar-expand-md navbar-light bg-light fixed-top">
       <div className="container">
-        <Link className="navbar-brand" to="/" onClick={hideNavbar}>
-          Full Stack Starter
+        <Link className="navbar-brand header-logo" to="/" onClick={hideNavbar}>
+          <img src={photo} className="img-fluid" alt="dev/Mission Logo"></img>
         </Link>
         <button onClick={toggleNavbar} className="navbar-toggler" type="button" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>

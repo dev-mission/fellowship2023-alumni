@@ -68,7 +68,7 @@ function AdminSurveyResponseForm() {
   return (
     <>
       <Helmet>
-        <title>SurveyResponse - {staticContext?.env?.VITE_SITE_TITLE ?? ''}</title>
+        <title>Survey Response - {staticContext?.env?.VITE_SITE_TITLE ?? ''}</title>
       </Helmet>
       <main className="container">
         <div className="row justify-content-center">

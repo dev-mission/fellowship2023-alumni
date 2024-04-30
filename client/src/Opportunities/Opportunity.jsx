@@ -47,7 +47,7 @@ function Opportunity() {
     const response = await Api.posts.update(postId, { isBookmarked: isChecked });
     if (response.status === 200) {
       console.log(response);
-      setPost(prevPost => ({ ...prevPost, isBookmarked: isChecked }));
+      setPost(prevPost => ({ ...prevPost, isBookmarked: response.data.userIds?.includes(user.id) }));
     } else {
       console.error('Failed to update isBookmarked status.');
     }
@@ -81,20 +81,18 @@ function Opportunity() {
               <p className="mb-0">{post.workLocation}</p>
               <p className="mb-0">{'Posted ' + new DateTime(post.createdAt).diffNow('days').toFormat('d') + ' days ago'}</p>
               <br></br>
-              <div className="mb-3">
+              {user.isAdmin && <><div className="mb-3">
                 <Link className="btn btn-outline-primary me-2" to="edit">
                   Edit Post
                 </Link>
                 <button className="btn btn-outline-danger" onClick={onDelete}>
                   Delete Post
                 </button>
-              </div>
+              </div></>}
+              
 
-              <br></br>
-              <br></br>
               <div className="d-flex flex-row align-items-center">
-                <i className="bi bi-bookmark" style={{ fontSize: '2rem' }}></i>
-                <div className="mb-3 form-group form-check">
+              <div className="m-1">
                     <input
                       type="checkbox"
                       className= "form-check-input"
@@ -105,10 +103,12 @@ function Opportunity() {
                       checked={post.isBookmarked}
                     />
                   </div>
+                <i className="bi bi-bookmark" style={{ fontSize: '2rem' }}></i>
                 <div className="d-flex flex-column ms-2">
                   <p className="mb-0">Save this opportunity</p>
                   <p className="mb-0">{post.usersCount > 0 && post.usersCount + ' other people have saved this already!'}</p>
                 </div>
+                
               </div>
               <p className="text-body-secondary">
                 By saving the opportunity, you&apos;re letting us know that you would like to see more opportunities like this.

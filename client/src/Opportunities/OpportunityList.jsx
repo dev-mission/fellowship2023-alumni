@@ -7,6 +7,7 @@ import { DateTime } from 'luxon';
 
 import Api from '../Api';
 import { useStaticContext } from '../StaticContext';
+import { useAuthContext } from '../AuthContext';
 
 import Form from 'react-bootstrap/Form';
 
@@ -25,6 +26,8 @@ function OpportunityList() {
   const [showModal, setShowModal] = useState(false);
   const [selectedTags, setSelectedTags] = useState([]);
   const [sortBy, setSortBy] = useState('Recently Added');
+  const { user } = useAuthContext();
+
 
   useEffect(() => {
     Api.posts.index().then((response) => setPosts(response.data));
@@ -32,6 +35,7 @@ function OpportunityList() {
   useEffect(() => {
     Api.tags.index().then((response) => setTags(response.data));
   }, []);
+
 
   const applyFilters = () => {
     return posts
@@ -97,11 +101,131 @@ function OpportunityList() {
     }
   }
 
+  const [showResponseModal, setShowResponseModal] = useState(false);
+  const [surveyResponse, setSurveyResponse] = useState({
+    isJob: false,
+    isVolunteer: false,
+    isOther: false,
+    otherText: '',
+  });
+  const [error, setError] = useState(null);
+
+  const handleResponseModalClose = () => {
+    setShowResponseModal(false);
+  };
+
+  const handleResponseModalShow = () => {
+    setShowResponseModal(true);
+  };
+
+  const handleResponseChange = (event) => {
+    const { name, value, checked } = event.target;
+    setSurveyResponse(prevState => ({
+      ...prevState,
+      [name]: name === 'isJob' || name === 'isVolunteer' || name === 'isOther' ? checked : value
+    }));
+  };
+
+  const handleSubmitResponse = async (event) => {
+    event.preventDefault();
+    setError(null);
+    try {
+      await Api.surveyResponses.create(surveyResponse);
+      handleResponseModalClose();
+    } catch (error) {
+      setError(error);
+    }
+  };
+
+  function onChange(event) {
+    const newSurveyResponse = { ...surveyResponse };
+    newSurveyResponse[event.target.name] = event.target.value;
+    setSurveyResponse(newSurveyResponse);
+  }
+
+
   return (
     <>
       <Helmet>
         <title>Opportunities - {staticContext?.env?.VITE_SITE_TITLE ?? ''}</title>
       </Helmet>
+
+      
+
+      {/* Modal for survey response */}
+      <Modal show={showResponseModal} onHide={handleResponseModalClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Check-in</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form onSubmit={handleSubmitResponse}>
+            <div className="mb-3 form-group form-check">
+              <input
+                type="checkbox"
+                className="form-check-input"
+                id="isJob"
+                name="isJob"
+                onChange={handleResponseChange}
+                checked={surveyResponse.isJob}
+                value={surveyResponse.isJob}
+              />
+              <label className="form-check-label" htmlFor="isJob">
+                Looking for Job
+              </label>
+            </div>
+            <div className="mb-3 form-group form-check">
+              <input
+                type="checkbox"
+                className="form-check-input"
+                id="isVolunteer"
+                name="isVolunteer"
+                onChange={handleResponseChange}
+                checked={surveyResponse.isVolunteer}
+                value={surveyResponse.isVolunteer}
+              />
+              <label className="form-check-label" htmlFor="isVolunteer">
+                Looking for Volunteering Opportunity
+              </label>
+            </div>
+            <div className="mb-3 form-group form-check">
+              <input
+                type="checkbox"
+                className="form-check-input"
+                id="isOther"
+                name="isOther"
+                onChange={handleResponseChange}
+                checked={surveyResponse.isOther}
+                value={surveyResponse.isOther}
+              />
+              <label className="form-check-label" htmlFor="isOther">
+                Looking for Other Opportunities
+              </label>
+            </div>
+            {surveyResponse.isOther && <><div className="mb-3">
+              <label className="form-label" htmlFor="otherText">
+                More information
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="otherText"
+                name="otherText"
+                onChange={onChange}
+                value={surveyResponse.otherText}
+              />
+            </div></>}
+            
+          </form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleResponseModalClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleSubmitResponse}>
+            Submit
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
       <Container>
         <Row className="mb-3">
@@ -109,9 +233,9 @@ function OpportunityList() {
             <h1>Opportunities</h1>
           </Col>
           <Col className="d-flex justify-content-end">
-            <Link to="new">
+            {user.isAdmin && <Link to="new">
               <Button variant="outline-primary">New Opp</Button>
-            </Link>
+            </Link>}
           </Col>
         </Row>
       </Container>
@@ -130,11 +254,12 @@ function OpportunityList() {
       <Container>
         <Row>
           <Col>
-            <Container>
-              {/* Filter Modal Button */}
-              <Button variant="outline-primary" onClick={toggleModal}>
+          {/* Filter Modal Button */}
+          <Button variant="outline-primary" onClick={toggleModal}>
                 Add Filter
               </Button>
+            <Container>
+              
               {/* Filter Modal */}
               <Modal show={showModal} onHide={toggleModal}>
                 <Modal.Header closeButton>
@@ -176,7 +301,7 @@ function OpportunityList() {
               {selectedTags.map((tagId) => {
                 const tag = tags.find((tag) => tag.id === tagId);
                 return (
-                  <Badge key={tag.id} variant="primary" className="mr-2">
+                  <Badge key={tag.id} variant="primary" className="m-2">
                     {tag.name}
                   </Badge>
                 );
@@ -196,14 +321,14 @@ function OpportunityList() {
           <div key={post.id} onClick={() => navigate(`${post.id}`)} className="card mb-3">
             <h5 className="card-header d-flex justify-content-between">
               <div>
-                <button className="btn p-1">
+                {user.isAdmin && <><button className="btn p-1">
                   <Link to={post.id + '/edit'} onClick={(event) => event.stopPropagation()}>
                     <i className="bi bi-pencil-square"></i>
                   </Link>
                 </button>
                 <button className="btn p-1" onClick={(event) => onDelete(event, post.id)}>
                   <i className="bi bi-trash"></i>
-                </button>
+                </button></>}
                 {post.OrganizationId && post.Organization.name}
               </div>
               <div>
@@ -222,7 +347,12 @@ function OpportunityList() {
             </div>
           </div>
         ))}
+        {/* Add a button to trigger the response modal */}
+      <Button variant="primary" onClick={handleResponseModalShow}>
+        Give Leo a check-in!
+      </Button>
       </Container>
+      
     </>
   );
 }
