@@ -25,13 +25,22 @@ function Opportunity() {
             <p className="mb-0">4 other people have saved this already!</p>
           </div>
         </div>
-        <p className="text-body-secondary">By saving the opportunity, you're letting us know that you would like to see more opportunities like this.</p>
+        <p className="text-body-secondary">
+          By saving the opportunity, you&apos;re letting us know that you would like to see more opportunities like this.
+        </p>
         <h2>Notes:</h2>
-        <p>Previous alums Jerry and Cheryl ahve been successful landing a role like this at this comapnies. They have some of the following experience:</p>
+        <p>
+          Previous alums Jerry and Cheryl ahve been successful landing a role like this at this comapnies. They have some of the following
+          experience:
+        </p>
         <h2>Job Description</h2>
-        <p>We are looking for a passionate Software Engineer to design, develop, and install software solutions.
-          Software Engineer responsibilities include gathering user requirements, defining system functionality and writing code in various languages, like Java, Ruby on Rails or .NET programming languages (e.g. C++ or JScript.NET.) Our ideal candidates are fmailiar with the software development life cycle (SDLC) from preliminary system analysis to tests and deployment.
-          Ultimlately, the role of the Software Engineer is to build high quality, innovative and fully performing software that complies with coding standards and technical design.
+        <p>
+          We are looking for a passionate Software Engineer to design, develop, and install software solutions. Software Engineer
+          responsibilities include gathering user requirements, defining system functionality and writing code in various languages, like
+          Java, Ruby on Rails or .NET programming languages (e.g. C++ or JScript.NET.) Our ideal candidates are fmailiar with the software
+          development life cycle (SDLC) from preliminary system analysis to tests and deployment. Ultimlately, the role of the Software
+          Engineer is to build high quality, innovative and fully performing software that complies with coding standards and technical
+          design.
         </p>
         <h2>Responsibilities</h2>
         <ul>
