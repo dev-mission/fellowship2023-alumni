@@ -16,7 +16,8 @@ export default function (sequelize, DataTypes) {
       // define association here
       User.hasMany(models.Bookmark);
       User.hasMany(models.Post);
-      // User.belongsTo(models.Cohort);
+      User.hasMany(models.SurveyResponse);
+      User.belongsTo(models.Cohort);
     }
 
     static isValidPassword(password) {
@@ -28,7 +29,28 @@ export default function (sequelize, DataTypes) {
     }
 
     toJSON() {
-      return _.pick(this.get(), ['id', 'firstName', 'lastName', 'email', 'picture', 'pictureUrl', 'isAdmin']);
+      // after new User model
+      const data = _.pick(this.get(), [
+        'id',
+        'firstName',
+        'lastName',
+        'email',
+        'picture',
+        'pictureUrl',
+        'isAdmin',
+        'roles',
+        'bio',
+        'userName',
+        'CohortId',
+        'linkedin',
+        'currentPosition',
+        'updatedAt',
+        'createdAt',
+      ]);
+      if (this.Cohort) {
+        data.Cohort = this.Cohort.toJSON();
+      }
+      return data;
     }
 
     hashPassword(password, options) {
@@ -161,6 +183,26 @@ export default function (sequelize, DataTypes) {
       },
       passwordResetTokenExpiresAt: {
         type: DataTypes.DATE,
+      },
+
+      // updated columns below
+      roles: {
+        type: DataTypes.JSONB,
+      },
+      bio: {
+        type: DataTypes.STRING,
+      },
+      userName: {
+        type: DataTypes.STRING,
+      },
+      // CohortId: {
+      //   type: DataTypes.INTEGER,
+      // },
+      linkedin: {
+        type: DataTypes.STRING,
+      },
+      currentPosition: {
+        type: DataTypes.STRING,
       },
     },
     {

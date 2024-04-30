@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 import classNames from 'classnames';
 
 import './Header.scss';
@@ -51,20 +52,40 @@ function Header() {
         </button>
         <div className={classNames('collapse navbar-collapse', { show: isNavbarShowing })}>
           <ul className="navbar-nav flex-grow-1 mb-2 mb-md-0">
-            <li className="nav-item active">
+            <li className="nav-item">
               <Link className="nav-link" aria-current="page" to="/" onClick={hideNavbar}>
                 Home
               </Link>
             </li>
-            <div className="flex-grow-1 d-flex justify-content-end">
+            <li className="nav-item">
+              <Link className="nav-link" aria-current="page" to="/opportunities" onClick={hideNavbar}>
+                Opportunities
+              </Link>
+            </li>
+            <ul className="navbar-nav flex-grow-1 d-flex justify-content-end">
               {user && (
                 <>
                   {user.isAdmin && (
-                    <li className="nav-item">
-                      <Link className="nav-link" to="/admin" onClick={hideNavbar}>
-                        Admin
+                    <NavDropdown title="Admin">
+                      <Link className="dropdown-item" to="/admin/surveyResponses" onClick={hideNavbar}>
+                        Survey Responses
                       </Link>
-                    </li>
+                      <Link className="dropdown-item" to="/admin/tags" onClick={hideNavbar}>
+                        Tags
+                      </Link>
+                      <Link className="dropdown-item" to="/admin/organizations" onClick={hideNavbar}>
+                        Organizations
+                      </Link>
+                      <Link className="dropdown-item" to="/admin/programs" onClick={hideNavbar}>
+                        Programs
+                      </Link>
+                      <Link className="dropdown-item" to="/admin/cohorts" onClick={hideNavbar}>
+                        Cohorts
+                      </Link>
+                      <Link className="dropdown-item" to="/admin/users" onClick={hideNavbar}>
+                        Users
+                      </Link>
+                    </NavDropdown>
                   )}
                   <li className="nav-item me-3">
                     <span className="nav-link d-inline-block me-1">
@@ -89,7 +110,7 @@ function Header() {
                   </Link>
                 </li>
               )}
-            </div>
+            </ul>
           </ul>
         </div>
       </div>

@@ -11,7 +11,7 @@ describe('/api/invites', () => {
   let testSession;
 
   beforeEach(async () => {
-    await helper.loadFixtures(['users', 'invites']);
+    await helper.loadFixtures(['users', 'cohorts', 'invites']);
     testSession = session(app);
     await testSession
       .post('/api/auth/login')
@@ -34,7 +34,7 @@ describe('/api/invites', () => {
       const response = await testSession
         .post('/api/invites')
         .set('Accept', 'application/json')
-        .send({ firstName: 'Invitee', lastName: 'Name', email: 'invitee.name@test.com', message: 'Welcome!' })
+        .send({ firstName: 'Invitee', lastName: 'Name', email: 'invitee.name@test.com', message: 'Welcome!', CohortId: 10000 })
         .expect(StatusCodes.CREATED);
 
       assert(response.body?.id);
@@ -44,12 +44,45 @@ describe('/api/invites', () => {
       assert.deepStrictEqual(invite.lastName, 'Name');
       assert.deepStrictEqual(invite.email, 'invitee.name@test.com');
       assert.deepStrictEqual(invite.message, 'Welcome!');
+      assert.deepStrictEqual(invite.CohortId, 10000);
       assert.deepStrictEqual(invite.CreatedByUserId, 1);
 
       const emails = nodemailerMock.mock.getSentMail();
       assert.deepStrictEqual(emails.length, 1);
       assert.deepStrictEqual(emails[0].subject, `Your invitation to ${process.env.VITE_SITE_TITLE}`);
-      assert.deepStrictEqual(emails[0].to, 'Invitee Name <invitee.name@test.com>');
+      assert.deepStrictEqual(emails[0].to, '"Invitee Name" <invitee.name@test.com>');
+    });
+  });
+
+  describe('POST /bulk', () => {
+    it('creates and sends multiple Invites', async () => {
+      const response = await testSession
+        .post('/api/invites/bulk')
+        .set('Accept', 'application/json')
+        .send({
+          recipients: `invitee.1@test.com
+invitee.2@test.com
+John Doe <john.doe@test.com>, "Jane M. Doe" <jane.m.doe@test.com>`,
+          message: 'Welcome!',
+          CohortId: 10000,
+        })
+        .expect(StatusCodes.CREATED);
+
+      assert.deepStrictEqual(response.body?.length, 4);
+
+      const invite = await models.Invite.findByPk(response.body[0].id);
+      assert.deepStrictEqual(invite.CohortId, 10000);
+
+      const emails = nodemailerMock.mock.getSentMail();
+      assert.deepStrictEqual(emails.length, 4);
+
+      const tos = emails.map((e) => e.to).sort();
+      assert.deepStrictEqual(tos, [
+        '"Jane M. Doe" <jane.m.doe@test.com>',
+        '"John Doe" <john.doe@test.com>',
+        'invitee.1@test.com',
+        'invitee.2@test.com',
+      ]);
     });
   });
 
@@ -68,6 +101,7 @@ describe('/api/invites', () => {
         email: 'invited.user.1@test.com',
         message: 'This is an invitation to Invited User 1.',
         createdAt: '2022-01-29T22:58:56.000Z',
+        CohortId: 10000,
         CreatedByUserId: 1,
         acceptedAt: null,
         AcceptedByUserId: null,
@@ -113,7 +147,18 @@ describe('/api/invites', () => {
         isAdmin: false,
         picture: null,
         pictureUrl: null,
+        roles: null,
+        bio: null,
+        userName: null,
+        CohortId: 10000,
+        linkedin: null,
+        currentPosition: null,
+        createdAt: response.body.createdAt,
+        updatedAt: response.body.updatedAt,
       });
+
+      const user = await models.User.findByPk(id);
+      assert.deepStrictEqual(user.CohortId, 10000);
 
       const invite = await models.Invite.findByPk('14a500b7-f14c-48cd-b815-3685a8b54370');
       assert(invite.acceptedAt);

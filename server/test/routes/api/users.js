@@ -48,6 +48,14 @@ describe('/api/users', () => {
           isAdmin: false,
           picture: null,
           pictureUrl: null,
+          roles: null,
+          bio: null,
+          userName: null,
+          CohortId: null,
+          linkedin: null,
+          currentPosition: null,
+          createdAt: response.body.createdAt,
+          updatedAt: response.body.updatedAt,
         });
       });
     });
@@ -72,6 +80,14 @@ describe('/api/users', () => {
           isAdmin: false,
           picture: null,
           pictureUrl: null,
+          roles: null,
+          bio: null,
+          userName: null,
+          CohortId: null,
+          linkedin: null,
+          currentPosition: null,
+          createdAt: response.body.createdAt,
+          updatedAt: response.body.updatedAt,
         });
       });
 

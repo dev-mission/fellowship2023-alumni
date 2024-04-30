@@ -23,13 +23,14 @@ router.get('/', interceptors.requireAdmin, async (req, res) => {
 });
 
 router.post('/', interceptors.requireAdmin, async (req, res) => {
-  const invite = models.Invite.build(_.pick(req.body, ['firstName', 'lastName', 'email', 'message']));
+  const invite = models.Invite.build(_.pick(req.body, ['firstName', 'lastName', 'email', 'message', 'CohortId']));
   invite.CreatedByUserId = req.user.id;
   try {
     await invite.save();
     await invite.sendInviteEmail();
     res.status(StatusCodes.CREATED).json(invite.toJSON());
   } catch (error) {
+    console.log(error);
     if (error.name === 'SequelizeValidationError') {
       res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({
         status: StatusCodes.UNPROCESSABLE_ENTITY,
@@ -38,6 +39,39 @@ router.post('/', interceptors.requireAdmin, async (req, res) => {
     } else {
       res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
     }
+  }
+});
+
+router.post('/bulk', interceptors.requireAdmin, async (req, res) => {
+  try {
+    const { recipients, message, CohortId } = req.body;
+    const payload = await Promise.all(
+      [...recipients.matchAll(/(?:"?([^"<@\n]+)"? ?<)?([^@< ,\n]+@[^ ,>\n]+)>?/g)].map(async (match) => {
+        const [, fullName, email] = match;
+        const data = {
+          email,
+          message,
+          CohortId,
+          CreatedByUserId: req.user.id,
+        };
+        if (fullName) {
+          const names = fullName.trim().split(' ');
+          if (names.length > 0) {
+            data.firstName = names[0];
+          }
+          if (names.length > 1) {
+            data.lastName = names.slice(1).join(' ');
+          }
+        }
+        const invite = await models.Invite.create(data);
+        await invite.sendInviteEmail();
+        return invite.toJSON();
+      }),
+    );
+    res.status(StatusCodes.CREATED).json(payload);
+  } catch (error) {
+    console.log(error);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();
   }
 });
 
@@ -81,7 +115,11 @@ router.post('/:id/accept', async (req, res, next) => {
             res.status(StatusCodes.FORBIDDEN).end();
             return;
           }
-          user = models.User.build(_.pick(req.body, ['firstName', 'lastName', 'username', 'email', 'password', 'confirmPassword']));
+          const { CohortId } = invite;
+          user = models.User.build({
+            ..._.pick(req.body, ['firstName', 'lastName', 'username', 'email', 'password', 'confirmPassword']),
+            CohortId,
+          });
           await user.save({ transaction });
           await invite.update(
             {
