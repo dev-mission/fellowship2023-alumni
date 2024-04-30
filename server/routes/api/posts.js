@@ -23,6 +23,8 @@ router.post('/', interceptors.requireAdmin, async (req, res) => {
       'workLocation',
       'OrganizationId',
       'ProgramId',
+      'notes',
+      'responsibilities',
     ]);
     data.UserId = req.user.id;
     const record = await models.Post.create(data);
@@ -61,7 +63,7 @@ router.get('/', interceptors.requireLogin, async (req, res) => {
   const data = await Promise.all(
     records.map(async (r) => {
       const json = r.toJSON();
-      json.bookmarksCount = await r.countBookmarks();
+      json.usersCount = await r.countUsers();
       return json;
     }),
   );
@@ -88,11 +90,17 @@ router.patch('/:id', interceptors.requireAdmin, async (req, res) => {
         // 'UserId',
         'OrganizationId',
         'ProgramId',
+        'notes',
+        'responsibilities',
       ]),
     );
     const tagIds = _.pick(req.body, ['tagIds']).tagIds;
+    const userIds = _.pick(req.body, ['userIds']).userIds;
     if (tagIds) {
       await record.setTags(tagIds);
+    }
+    if (userIds) {
+      await record.setUsers(userIds);
     }
     res.json(record.toJSON());
   } catch (error) {
@@ -111,7 +119,11 @@ router.patch('/:id', interceptors.requireAdmin, async (req, res) => {
 router.get('/:id', interceptors.requireLogin, async (req, res) => {
   try {
     const record = await models.Post.findByPk(req.params.id, { include: [models.Organization, models.Tag] });
-    res.json(record.toJSON());
+    const data = record.toJSON();
+    const users = await record.getUsers();
+    data.userIds = users.map((user) => user.id);
+    data.usersCount = await record.countUsers();
+    res.json(data);
   } catch (err) {
     console.log(err);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).end();

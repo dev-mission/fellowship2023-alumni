@@ -22,6 +22,8 @@ function AdminPostForm() {
     description: 'Description',
     applicationUrl: 'https://devmission.org/',
     OrganizationId: 2,
+    notes: '',
+    responsibilities: '',
     tagIds: [],
   });
   const [error, setError] = useState(null);
@@ -338,7 +340,7 @@ function AdminPostForm() {
                       id="responsibilities"
                       name="responsibilities"
                       onChange={onChange}
-                      // value={post.responsibilities}
+                      value={post.responsibilities}
                     />
                     {error?.errorMessagesHTMLFor?.('responsibilities')}
                   </div>
@@ -364,7 +366,7 @@ function AdminPostForm() {
                       id="notes"
                       name="notes"
                       onChange={onChange}
-                      // value={post.otherText}
+                      value={post.notes}
                     />
                     {error?.errorMessagesHTMLFor?.('notes')}
                   </div>

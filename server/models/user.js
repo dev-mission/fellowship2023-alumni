@@ -18,6 +18,7 @@ export default function (sequelize, DataTypes) {
       User.hasMany(models.Post);
       User.hasMany(models.SurveyResponse);
       User.belongsTo(models.Cohort);
+      User.belongsToMany(models.Post, { through: models.Bookmark });
     }
 
     static isValidPassword(password) {

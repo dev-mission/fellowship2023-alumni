@@ -196,10 +196,12 @@ function OpportunityList() {
           <div key={post.id} onClick={() => navigate(`${post.id}`)} className="card mb-3">
             <h5 className="card-header d-flex justify-content-between">
               <div>
-                <Link to={post.id + '/edit'} onClick={(event) => event.stopPropagation()}>
-                  <i className="bi bi-pencil-square"></i>
-                </Link>
-                <button className="border-0" onClick={(event) => onDelete(event, post.id)}>
+                <button className="btn p-1">
+                  <Link to={post.id + '/edit'} onClick={(event) => event.stopPropagation()}>
+                    <i className="bi bi-pencil-square"></i>
+                  </Link>
+                </button>
+                <button className="btn p-1" onClick={(event) => onDelete(event, post.id)}>
                   <i className="bi bi-trash"></i>
                 </button>
                 {post.OrganizationId && post.Organization.name}

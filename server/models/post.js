@@ -15,6 +15,7 @@ export default function (sequelize, DataTypes) {
       Post.hasMany(models.Bookmark);
       Post.hasMany(models.PostTag);
       Post.belongsToMany(models.Tag, { through: models.PostTag });
+      Post.belongsToMany(models.User, { through: models.Bookmark });
     }
   }
   Post.init(

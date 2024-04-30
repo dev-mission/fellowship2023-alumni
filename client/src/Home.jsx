@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import { useStaticContext } from './StaticContext';
-import photo from '../public/photos/MartinHelping.png';
+import photo from '../public/MartinHelping.png';
 import Container from 'react-bootstrap/Container';
 
 function Home() {
