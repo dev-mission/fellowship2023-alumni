@@ -94,7 +94,7 @@ router.patch('/:id', interceptors.requireAdmin, async (req, res) => {
         'responsibilities',
       ]),
     );
-    
+
     const data = record.toJSON();
     const tagIds = _.pick(req.body, ['tagIds']).tagIds;
     if (tagIds) {

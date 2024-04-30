@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import classNames from 'classnames';
-import photo from '../public/photos/devMissionLogo.png'
+import photo from '../public/photos/devMissionLogo.png';
 
 import './Header.scss';
 import Api from './Api';

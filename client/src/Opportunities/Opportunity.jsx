@@ -17,7 +17,7 @@ function Opportunity() {
     description: 'Description',
     applicationUrl: 'https://devmission.org/',
     OrganizationId: 2,
-    Organization: {name: 'Organization Name'},
+    Organization: { name: 'Organization Name' },
     notes: '',
     responsibilities: '',
     tagIds: [],
@@ -38,7 +38,7 @@ function Opportunity() {
         setPost({ ...response.data, tagIds: tagIds, isBookmarked: isBookmarked });
       });
     }
-  }, [postId]);
+  }, [postId, user.id]);
 
   async function onChangeCheckBox(event) {
     const isChecked = event.target.checked;
@@ -47,12 +47,11 @@ function Opportunity() {
     const response = await Api.posts.update(postId, { isBookmarked: isChecked });
     if (response.status === 200) {
       console.log(response);
-      setPost(prevPost => ({ ...prevPost, isBookmarked: response.data.userIds?.includes(user.id) }));
+      post.userIds.push(user.id);
+      setPost((post) => ({ ...post, isBookmarked: isChecked }));
     } else {
       console.error('Failed to update isBookmarked status.');
     }
-    
-    
   }
 
   async function onDelete() {
@@ -81,34 +80,36 @@ function Opportunity() {
               <p className="mb-0">{post.workLocation}</p>
               <p className="mb-0">{'Posted ' + new DateTime(post.createdAt).diffNow('days').toFormat('d') + ' days ago'}</p>
               <br></br>
-              {user.isAdmin && <><div className="mb-3">
-                <Link className="btn btn-outline-primary me-2" to="edit">
-                  Edit Post
-                </Link>
-                <button className="btn btn-outline-danger" onClick={onDelete}>
-                  Delete Post
-                </button>
-              </div></>}
-              
+              {user.isAdmin && (
+                <>
+                  <div className="mb-3">
+                    <Link className="btn btn-outline-primary me-2" to="edit">
+                      Edit Post
+                    </Link>
+                    <button className="btn btn-outline-danger" onClick={onDelete}>
+                      Delete Post
+                    </button>
+                  </div>
+                </>
+              )}
 
               <div className="d-flex flex-row align-items-center">
-              <div className="m-1">
-                    <input
-                      type="checkbox"
-                      className= "form-check-input"
-                      id={user.id}
-                      name="isBookmarked"
-                      value={user.id}
-                      onChange={onChangeCheckBox}
-                      checked={post.isBookmarked}
-                    />
-                  </div>
+                <div className="m-1">
+                  <input
+                    type="checkbox"
+                    className="form-check-input"
+                    id={user.id}
+                    name="isBookmarked"
+                    value={user.id}
+                    onChange={onChangeCheckBox}
+                    checked={post.isBookmarked}
+                  />
+                </div>
                 <i className="bi bi-bookmark" style={{ fontSize: '2rem' }}></i>
                 <div className="d-flex flex-column ms-2">
                   <p className="mb-0">Save this opportunity</p>
                   <p className="mb-0">{post.usersCount > 0 && post.usersCount + ' other people have saved this already!'}</p>
                 </div>
-                
               </div>
               <p className="text-body-secondary">
                 By saving the opportunity, you&apos;re letting us know that you would like to see more opportunities like this.

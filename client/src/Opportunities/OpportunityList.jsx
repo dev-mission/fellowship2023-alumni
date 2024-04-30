@@ -28,14 +28,12 @@ function OpportunityList() {
   const [sortBy, setSortBy] = useState('Recently Added');
   const { user } = useAuthContext();
 
-
   useEffect(() => {
     Api.posts.index().then((response) => setPosts(response.data));
   }, []);
   useEffect(() => {
     Api.tags.index().then((response) => setTags(response.data));
   }, []);
-
 
   const applyFilters = () => {
     return posts
@@ -120,9 +118,9 @@ function OpportunityList() {
 
   const handleResponseChange = (event) => {
     const { name, value, checked } = event.target;
-    setSurveyResponse(prevState => ({
+    setSurveyResponse((prevState) => ({
       ...prevState,
-      [name]: name === 'isJob' || name === 'isVolunteer' || name === 'isOther' ? checked : value
+      [name]: name === 'isJob' || name === 'isVolunteer' || name === 'isOther' ? checked : value,
     }));
   };
 
@@ -135,6 +133,7 @@ function OpportunityList() {
     } catch (error) {
       setError(error);
     }
+    console.log(error);
   };
 
   function onChange(event) {
@@ -143,14 +142,11 @@ function OpportunityList() {
     setSurveyResponse(newSurveyResponse);
   }
 
-
   return (
     <>
       <Helmet>
         <title>Opportunities - {staticContext?.env?.VITE_SITE_TITLE ?? ''}</title>
       </Helmet>
-
-      
 
       {/* Modal for survey response */}
       <Modal show={showResponseModal} onHide={handleResponseModalClose}>
@@ -201,20 +197,23 @@ function OpportunityList() {
                 Looking for Other Opportunities
               </label>
             </div>
-            {surveyResponse.isOther && <><div className="mb-3">
-              <label className="form-label" htmlFor="otherText">
-                More information
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="otherText"
-                name="otherText"
-                onChange={onChange}
-                value={surveyResponse.otherText}
-              />
-            </div></>}
-            
+            {surveyResponse.isOther && (
+              <>
+                <div className="mb-3">
+                  <label className="form-label" htmlFor="otherText">
+                    More information
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="otherText"
+                    name="otherText"
+                    onChange={onChange}
+                    value={surveyResponse.otherText}
+                  />
+                </div>
+              </>
+            )}
           </form>
         </Modal.Body>
         <Modal.Footer>
@@ -233,9 +232,11 @@ function OpportunityList() {
             <h1>Opportunities</h1>
           </Col>
           <Col className="d-flex justify-content-end">
-            {user.isAdmin && <Link to="new">
-              <Button variant="outline-primary">New Opp</Button>
-            </Link>}
+            {user.isAdmin && (
+              <Link to="new">
+                <Button variant="outline-primary">New Opp</Button>
+              </Link>
+            )}
           </Col>
         </Row>
       </Container>
@@ -254,12 +255,11 @@ function OpportunityList() {
       <Container>
         <Row>
           <Col>
-          {/* Filter Modal Button */}
-          <Button variant="outline-primary" onClick={toggleModal}>
-                Add Filter
-              </Button>
+            {/* Filter Modal Button */}
+            <Button variant="outline-primary" onClick={toggleModal}>
+              Add Filter
+            </Button>
             <Container>
-              
               {/* Filter Modal */}
               <Modal show={showModal} onHide={toggleModal}>
                 <Modal.Header closeButton>
@@ -321,14 +321,18 @@ function OpportunityList() {
           <div key={post.id} onClick={() => navigate(`${post.id}`)} className="card mb-3">
             <h5 className="card-header d-flex justify-content-between">
               <div>
-                {user.isAdmin && <><button className="btn p-1">
-                  <Link to={post.id + '/edit'} onClick={(event) => event.stopPropagation()}>
-                    <i className="bi bi-pencil-square"></i>
-                  </Link>
-                </button>
-                <button className="btn p-1" onClick={(event) => onDelete(event, post.id)}>
-                  <i className="bi bi-trash"></i>
-                </button></>}
+                {user.isAdmin && (
+                  <>
+                    <button className="btn p-1">
+                      <Link to={post.id + '/edit'} onClick={(event) => event.stopPropagation()}>
+                        <i className="bi bi-pencil-square"></i>
+                      </Link>
+                    </button>
+                    <button className="btn p-1" onClick={(event) => onDelete(event, post.id)}>
+                      <i className="bi bi-trash"></i>
+                    </button>
+                  </>
+                )}
                 {post.OrganizationId && post.Organization.name}
               </div>
               <div>
@@ -348,11 +352,10 @@ function OpportunityList() {
           </div>
         ))}
         {/* Add a button to trigger the response modal */}
-      <Button variant="primary" onClick={handleResponseModalShow}>
-        Give Leo a check-in!
-      </Button>
+        <Button variant="primary" onClick={handleResponseModalShow}>
+          Give Leo a check-in!
+        </Button>
       </Container>
-      
     </>
   );
 }
