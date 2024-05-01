@@ -6,6 +6,7 @@ import AdminSurveyResponsesRoutes from './SurveyResponses/AdminSurveyResponsesRo
 import AdminTagsRoutes from './Tags/AdminTagsRoutes';
 import AdminOrganizationsRoutes from './Organizations/AdminOrganizationsRoutes';
 import AdminProgramsRoutes from './Programs/AdminProgramsRoutes';
+import DashboardRoutes from './Dashboard/DashboardRoutes';
 
 function AdminRoutes() {
   return (
@@ -17,6 +18,7 @@ function AdminRoutes() {
       <Route path="cohorts/*" element={<AdminCohortsRoutes />} />
       <Route path="users/*" element={<AdminUsersRoutes />} />
       <Route path="" element={<Navigate to="users" />} />
+      <Route path="dashboard/*" element={<DashboardRoutes />} />
     </Routes>
   );
 }
