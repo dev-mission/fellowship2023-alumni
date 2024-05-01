@@ -48,6 +48,7 @@ function Opportunity() {
     if (response.status === 200) {
       console.log(response);
       post.userIds.push(user.id);
+      post.usersCount = post.usersCount + (isChecked ? 1 : -1);
       setPost((post) => ({ ...post, isBookmarked: isChecked }));
     } else {
       console.error('Failed to update isBookmarked status.');
